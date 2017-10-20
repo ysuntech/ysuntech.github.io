@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Webs on 汇编吾信</title>
+    <link>https://adamsunyu.github.io/web/</link>
+    <description>Recent content in Webs on 汇编吾信</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 20 Oct 2017 17:43:56 +0800</lastBuildDate>
+    
+	<atom:link href="https://adamsunyu.github.io/web/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用hugo搭建博客系统</title>
+      <link>https://adamsunyu.github.io/web/blog-with-hugo/</link>
+      <pubDate>Fri, 20 Oct 2017 17:43:56 +0800</pubDate>
+      
+      <guid>https://adamsunyu.github.io/web/blog-with-hugo/</guid>
+      <description>介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。
+搭建博客 让我们开始吧,按步骤来：
+ 下载hugo软件，图省事可以直接下载二进制版本
+ 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo
+ 初始化博客项目
+cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点
+cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容
+languageCode = &amp;quot;zh-CN&amp;quot; baseurl = &amp;quot;https://mytestaccout.github.io/&amp;quot; title = &amp;quot;我的博客小站&amp;quot; theme = &amp;quot;beg&amp;quot; #googleAnalytics = &amp;quot;UA-XXXXXXXX-XX&amp;quot; # Optional #disqusShortname = &amp;quot;XYW&amp;quot; [params] dateformat = &amp;quot;Jan 2, 2006&amp;quot; # Optional  其中mytestaccout需要替换为自己的github账号
+ 写一篇博客
+hugo new mydir/post1.</description>
+    </item>
+    
+  </channel>
+</rss>

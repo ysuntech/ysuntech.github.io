@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://adamsunyu.github.io/data/airflow-tutorial-2/">
+
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信</title>
+    
+<meta name="description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。首先了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读取和分 执行器(executor) Web服务器(webserver)  常见问题 ">
+
+<meta property="og:title" content="Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://adamsunyu.github.io/data/airflow-tutorial-2/">
+<meta property="og:image" content="https://adamsunyu.github.io/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。首先了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读取和分 执行器(executor) Web服务器(webserver)  常见问题 ">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="https://adamsunyu.github.io/data/airflow-tutorial-2/">
+<meta name="twitter:title" content="Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信">
+<meta name="twitter:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。首先了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读取和分 执行器(executor) Web服务器(webserver)  常见问题 ">
+<meta name="twitter:image" content="https://adamsunyu.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://adamsunyu.github.io/"
+    },
+    "headline": "Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://adamsunyu.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-20T16:48:32JST",
+    "dateModified": "2017-10-20T16:48:32JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://adamsunyu.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": " 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。
+分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。
+首先了解下Airflow中的几个核心概念:
+ DAG 调度器(scheduler): 调度器负责读取和分
+ 执行器(executor)
+ Web服务器(webserver)
+  常见问题 "
+  }
+</script>
+
+
+    <link href="https://adamsunyu.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://adamsunyu.github.io/">汇编吾信</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://adamsunyu.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://adamsunyu.github.io/data/" itemprop="url"><span itemprop="title">data</span></a></li>
+        
+        <li class="active">Airflow调度系统教程【二】:分布式和常见问题</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T16:48:32JST">Oct 20, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://adamsunyu.github.io/data/">data</a></li>
+      
+    </ul>
+
+    <h1 class="title">Airflow调度系统教程【二】:分布式和常见问题</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h2 id="介绍">介绍</h2>
+
+<p>这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。</p>
+
+<h2 id="分布式">分布式</h2>
+
+<p>Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。
+ Airflow系统只需要稍加配置，便可实现分布式调度。</p>
+
+<p>首先了解下Airflow中的几个核心概念:</p>
+
+<ul>
+<li>DAG</li>
+
+<li><p>调度器(scheduler): 调度器负责读取和分</p></li>
+
+<li><p>执行器(executor)</p></li>
+
+<li><p>Web服务器(webserver)</p></li>
+</ul>
+
+<h2 id="常见问题">常见问题</h2>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://adamsunyu.github.io/tags/airflow/">airflow</a></li>
+          
+          <li><a href="https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">调度系统</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE" class="list-group-item">大数据</a>
+      
+      <a href="https://adamsunyu.github.io/categories/web" class="list-group-item">web</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://adamsunyu.github.io/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="https://adamsunyu.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; 汇编吾信</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on 汇编吾信</title>
+    <link>https://adamsunyu.github.io/tags/</link>
+    <description>Recent content in Tags on 汇编吾信</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 20 Oct 2017 16:48:32 +0800</lastBuildDate>
+    
+	<atom:link href="https://adamsunyu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Airflow</title>
+      <link>https://adamsunyu.github.io/tags/airflow/</link>
+      <pubDate>Fri, 20 Oct 2017 16:48:32 +0800</pubDate>
+      
+      <guid>https://adamsunyu.github.io/tags/airflow/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hugo</title>
+      <link>https://adamsunyu.github.io/tags/hugo/</link>
+      <pubDate>Fri, 20 Oct 2017 17:43:56 +0800</pubDate>
+      
+      <guid>https://adamsunyu.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>博客系统</title>
+      <link>https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Fri, 20 Oct 2017 17:43:56 +0800</pubDate>
+      
+      <guid>https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>调度系统</title>
+      <link>https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Fri, 20 Oct 2017 16:48:32 +0800</pubDate>
+      
+      <guid>https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="https://adamsunyu.github.io/web/blog-with-hugo/">
+
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>使用hugo搭建博客系统 - 汇编吾信</title>
+    
+<meta name="description" content="介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。搭建博客 让我们开始吧,按步骤来： 下载hugo软件，图省事可以直接下载二进制版本 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo 初始化博客项目cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容languageCode = &amp;quot;zh-CN&amp;quot; baseurl = &amp;quot;https://mytestaccout.github.io/&amp;quot; title = &amp;quot;我的博客小站&amp;quot; theme = &amp;quot;beg&amp;quot; #googleAnalytics = &amp;quot;UA-XXXXXXXX-XX&amp;quot; # Optional #disqusShortname = &amp;quot;XYW&amp;quot; [params] dateformat = &amp;quot;Jan 2, 2006&amp;quot; # Optional  其中mytestaccout需要替换为自己的github账号 写一篇博客hugo new mydir/post1.">
+
+<meta property="og:title" content="使用hugo搭建博客系统 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://adamsunyu.github.io/web/blog-with-hugo/">
+<meta property="og:image" content="https://adamsunyu.github.io/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。搭建博客 让我们开始吧,按步骤来： 下载hugo软件，图省事可以直接下载二进制版本 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo 初始化博客项目cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容languageCode = &amp;quot;zh-CN&amp;quot; baseurl = &amp;quot;https://mytestaccout.github.io/&amp;quot; title = &amp;quot;我的博客小站&amp;quot; theme = &amp;quot;beg&amp;quot; #googleAnalytics = &amp;quot;UA-XXXXXXXX-XX&amp;quot; # Optional #disqusShortname = &amp;quot;XYW&amp;quot; [params] dateformat = &amp;quot;Jan 2, 2006&amp;quot; # Optional  其中mytestaccout需要替换为自己的github账号 写一篇博客hugo new mydir/post1.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="https://adamsunyu.github.io/web/blog-with-hugo/">
+<meta name="twitter:title" content="使用hugo搭建博客系统 - 汇编吾信">
+<meta name="twitter:description" content="介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。搭建博客 让我们开始吧,按步骤来： 下载hugo软件，图省事可以直接下载二进制版本 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo 初始化博客项目cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容languageCode = &amp;quot;zh-CN&amp;quot; baseurl = &amp;quot;https://mytestaccout.github.io/&amp;quot; title = &amp;quot;我的博客小站&amp;quot; theme = &amp;quot;beg&amp;quot; #googleAnalytics = &amp;quot;UA-XXXXXXXX-XX&amp;quot; # Optional #disqusShortname = &amp;quot;XYW&amp;quot; [params] dateformat = &amp;quot;Jan 2, 2006&amp;quot; # Optional  其中mytestaccout需要替换为自己的github账号 写一篇博客hugo new mydir/post1.">
+<meta name="twitter:image" content="https://adamsunyu.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https://adamsunyu.github.io/"
+    },
+    "headline": "使用hugo搭建博客系统 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://adamsunyu.github.io/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-20T17:43:56JST",
+    "dateModified": "2017-10-20T17:43:56JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://adamsunyu.github.io/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。
+搭建博客 让我们开始吧,按步骤来：
+ 下载hugo软件，图省事可以直接下载二进制版本
+ 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo
+ 初始化博客项目
+cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点
+cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容
+languageCode = &quot;zh-CN&quot; baseurl = &quot;https://mytestaccout.github.io/&quot; title = &quot;我的博客小站&quot; theme = &quot;beg&quot; #googleAnalytics = &quot;UA-XXXXXXXX-XX&quot; # Optional #disqusShortname = &quot;XYW&quot; [params] dateformat = &quot;Jan 2, 2006&quot; # Optional  其中mytestaccout需要替换为自己的github账号
+ 写一篇博客
+hugo new mydir/post1."
+  }
+</script>
+
+
+    <link href="https://adamsunyu.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://adamsunyu.github.io/">汇编吾信</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://adamsunyu.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://adamsunyu.github.io/web/" itemprop="url"><span itemprop="title">web</span></a></li>
+        
+        <li class="active">使用hugo搭建博客系统</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T17:43:56JST">Oct 20, 2017</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://adamsunyu.github.io/web/">web</a></li>
+      
+    </ul>
+
+    <h1 class="title">使用hugo搭建博客系统</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h2 id="介绍">介绍</h2>
+
+<p>作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。</p>
+
+<h2 id="搭建博客">搭建博客</h2>
+
+<p>让我们开始吧,按步骤来：</p>
+
+<ol>
+<li><p>下载hugo软件，图省事可以直接下载二进制版本</p></li>
+
+<li><p>将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo</p></li>
+
+<li><p>初始化博客项目</p>
+
+<pre><code class="language-bash">cd ~
+# 创建名为hugo_blog的博客站点
+hugo new site hugo_blog
+</code></pre></li>
+
+<li><p>设置主题，配置站点</p>
+
+<pre><code class="language-bash">cd hugo_blog/themes
+# 这里我们使用beg 主题
+git clone https://github.com/dim0627/hugo_theme_beg.git beg
+# 修改配置文件
+vim hugo_blog/config.toml
+</code></pre>
+
+<p>修改内容</p>
+
+<pre><code class="language-toml">languageCode = &quot;zh-CN&quot;
+baseurl = &quot;https://mytestaccout.github.io/&quot;
+title = &quot;我的博客小站&quot;
+theme = &quot;beg&quot;
+#googleAnalytics = &quot;UA-XXXXXXXX-XX&quot; # Optional
+#disqusShortname = &quot;XYW&quot;
+[params]
+dateformat = &quot;Jan 2, 2006&quot; # Optional
+</code></pre>
+
+<p>其中mytestaccout需要替换为自己的github账号</p></li>
+
+<li><p>写一篇博客</p>
+
+<pre><code class="language-bash">hugo new mydir/post1.md
+</code></pre>
+
+<p>这样会生成content/mydir/post1.md
+使用编辑器打开md文件,文件分为两部分，上半部分为yaml格式，下半部分为文章内容。
+yaml部分可以设置标题(title)，日期(date)， 是否草稿(draft)，标签(tags)，分类(categories)。格式大致如下：</p>
+
+<pre><code class="language-markdown">---
+title: &quot;XXX调度系统:分布式和常见问题&quot;
+date: 2017-10-20T16:48:32+08:00
+draft: false
+tags: [&quot;XXX标签&quot;,&quot;调度系统&quot;]
+categories: [&quot;大数据&quot;]
+---
+以下是文章内容，markdown格式
+</code></pre>
+
+<p>注意默认设置下，draft为false的文章才能被预览和发布</p></li>
+
+<li><p>本地预览</p>
+
+<pre><code class="language-bash">hugo server
+# 然后打开 http://localhost:1313/
+</code></pre></li>
+
+<li><p>将md发布为html到public目录</p>
+
+<pre><code class="language-bash">hugo
+</code></pre></li>
+
+<li><p>在github上用自己的账号创建名为:&ldquo;{{github账号}}.github.io&rdquo;的repo</p></li>
+
+<li><p>将public目录下的文件push到刚创建的repo</p></li>
+
+<li><p>打开浏览器，访问: https://{{github账号}}.github.io/ 我们的免费博客上线啦</p></li>
+</ol>
+
+<h2 id="补充说明">补充说明</h2>
+
+<p>可以给自己的博客绑定域名(CNAME到{{github账号}}.github.io)</p>
+
+<p>不付费的话github.com上的repo只能为public，我们可以将自己的hugo站点(包括md文件)提交到oschina上的git</p>
+
+<p>PS: 本站点就是使用hugo和github pages搭建而成</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">CATEGORIES</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://adamsunyu.github.io/categories/web/">web</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://adamsunyu.github.io/tags/hugo/">hugo</a></li>
+          
+          <li><a href="https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/">博客系统</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">CATEGORY</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE" class="list-group-item">大数据</a>
+      
+      <a href="https://adamsunyu.github.io/categories/web" class="list-group-item">web</a>
+      
+    </div>
+  </section>
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://adamsunyu.github.io/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="https://adamsunyu.github.io/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; 汇编吾信</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
