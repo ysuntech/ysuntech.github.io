@@ -3,85 +3,81 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://adamsunyu.github.io/web/blog-with-hugo/</loc>
+    <loc>http://tech.mwq365.cn/web/blog-with-hugo/</loc>
     <lastmod>2017-10-20T17:43:56+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/data/airflow-tutorial-2/</loc>
+    <loc>http://tech.mwq365.cn/data/airflow-tutorial-2/</loc>
     <lastmod>2017-10-20T16:48:32+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/data/airflow-tutorial-1/</loc>
+    <loc>http://tech.mwq365.cn/data/airflow-tutorial-1/</loc>
     <lastmod>2017-10-20T13:40:18+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/baidu_verify_g0zq4cetmw/</loc>
-  </url>
-  
-  <url>
-    <loc>https://adamsunyu.github.io/tags/airflow/</loc>
+    <loc>http://tech.mwq365.cn/tags/airflow/</loc>
     <lastmod>2017-10-20T16:48:32+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/categories/</loc>
+    <loc>http://tech.mwq365.cn/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/data/</loc>
+    <loc>http://tech.mwq365.cn/data/</loc>
     <lastmod>2017-10-20T16:48:32+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/tags/hugo/</loc>
+    <loc>http://tech.mwq365.cn/tags/hugo/</loc>
     <lastmod>2017-10-20T17:43:56+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/tags/</loc>
+    <loc>http://tech.mwq365.cn/tags/</loc>
     <lastmod>2017-10-20T16:48:32+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/categories/web/</loc>
+    <loc>http://tech.mwq365.cn/categories/web/</loc>
     <lastmod>2017-10-20T17:43:56+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/web/</loc>
+    <loc>http://tech.mwq365.cn/web/</loc>
     <lastmod>2017-10-20T17:43:56+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</loc>
+    <loc>http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2017-10-20T17:43:56+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
+    <loc>http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
     <lastmod>2017-10-20T16:48:32+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/</loc>
+    <loc>http://tech.mwq365.cn/</loc>
     <lastmod>2017-10-20T17:43:56+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/</loc>
+    <loc>http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2017-10-20T16:48:32+08:00</lastmod>
     <priority>0</priority>
   </url>

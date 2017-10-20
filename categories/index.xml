@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on 汇编吾信</title>
-    <link>https://adamsunyu.github.io/categories/</link>
+    <link>http://tech.mwq365.cn/categories/</link>
     <description>Recent content in Categories on 汇编吾信</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     
-	<atom:link href="https://adamsunyu.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://tech.mwq365.cn/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Web</title>
-      <link>https://adamsunyu.github.io/categories/web/</link>
+      <link>http://tech.mwq365.cn/categories/web/</link>
       <pubDate>Fri, 20 Oct 2017 17:43:56 +0800</pubDate>
       
-      <guid>https://adamsunyu.github.io/categories/web/</guid>
+      <guid>http://tech.mwq365.cn/categories/web/</guid>
       <description></description>
     </item>
     
     <item>
       <title>大数据</title>
-      <link>https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+      <link>http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Fri, 20 Oct 2017 16:48:32 +0800</pubDate>
       
-      <guid>https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</guid>
+      <guid>http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</guid>
       <description></description>
     </item>
     

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>大数据 on 汇编吾信</title>
-    <link>https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
+    <link>http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/</link>
     <description>Recent content in 大数据 on 汇编吾信</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Fri, 20 Oct 2017 16:48:32 +0800</lastBuildDate>
     
-	<atom:link href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Airflow调度系统教程【二】:分布式和常见问题</title>
-      <link>https://adamsunyu.github.io/data/airflow-tutorial-2/</link>
+      <link>http://tech.mwq365.cn/data/airflow-tutorial-2/</link>
       <pubDate>Fri, 20 Oct 2017 16:48:32 +0800</pubDate>
       
-      <guid>https://adamsunyu.github.io/data/airflow-tutorial-2/</guid>
+      <guid>http://tech.mwq365.cn/data/airflow-tutorial-2/</guid>
       <description> 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。
 分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。
 首先了解下Airflow中的几个核心概念:
@@ -28,10 +28,10 @@
     
     <item>
       <title>Airflow调度系统教程【一】:安装</title>
-      <link>https://adamsunyu.github.io/data/airflow-tutorial-1/</link>
+      <link>http://tech.mwq365.cn/data/airflow-tutorial-1/</link>
       <pubDate>Fri, 20 Oct 2017 13:40:18 +0800</pubDate>
       
-      <guid>https://adamsunyu.github.io/data/airflow-tutorial-1/</guid>
+      <guid>http://tech.mwq365.cn/data/airflow-tutorial-1/</guid>
       <description>介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。
 这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。
 特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。

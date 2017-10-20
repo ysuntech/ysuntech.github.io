@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://adamsunyu.github.io/data/airflow-tutorial-1/">
+<link rel="canonical" href="http://tech.mwq365.cn/data/airflow-tutorial-1/">
 
 
     <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
 <meta property="og:title" content="Airflow调度系统教程【一】:安装 - 汇编吾信">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://adamsunyu.github.io/data/airflow-tutorial-1/">
-<meta property="og:image" content="https://adamsunyu.github.io/images/default.png">
+<meta property="og:url" content="http://tech.mwq365.cn/data/airflow-tutorial-1/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
 <meta property="og:site_name" content="汇编吾信">
 <meta property="og:description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="汇编吾信">
-<meta name="twitter:url" content="https://adamsunyu.github.io/data/airflow-tutorial-1/">
+<meta name="twitter:url" content="http://tech.mwq365.cn/data/airflow-tutorial-1/">
 <meta name="twitter:title" content="Airflow调度系统教程【一】:安装 - 汇编吾信">
 <meta name="twitter:description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
-<meta name="twitter:image" content="https://adamsunyu.github.io/images/default.png">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
 
 
 <script type="application/ld+json">
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://adamsunyu.github.io/"
+      "@id":"http://tech.mwq365.cn/"
     },
     "headline": "Airflow调度系统教程【一】:安装 - 汇编吾信",
     "image": {
       "@type": "ImageObject",
-      "url": "https://adamsunyu.github.io/images/default.png",
+      "url": "http://tech.mwq365.cn/images/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "汇编吾信",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://adamsunyu.github.io/images/logo.png",
+        "url": "http://tech.mwq365.cn/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -73,7 +73,7 @@
 </script>
 
 
-    <link href="https://adamsunyu.github.io/css/styles.css" rel="stylesheet">
+    <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -102,7 +102,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://adamsunyu.github.io/">汇编吾信</a>
+            <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
           </div>
 
           
@@ -119,9 +119,9 @@
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://adamsunyu.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
-        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://adamsunyu.github.io/data/" itemprop="url"><span itemprop="title">data</span></a></li>
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/data/" itemprop="url"><span itemprop="title">data</span></a></li>
         
         <li class="active">Airflow调度系统教程【一】:安装</li>
       </ol>
@@ -131,7 +131,7 @@
   <header>
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T13:40:18JST">Oct 20, 2017</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://adamsunyu.github.io/data/">data</a></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
     </ul>
 
@@ -279,7 +279,7 @@ airflow webserver
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+          <li><a href="http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
           
         </ul>
       </div>
@@ -294,9 +294,9 @@ airflow webserver
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://adamsunyu.github.io/tags/airflow/">airflow</a></li>
+          <li><a href="http://tech.mwq365.cn/tags/airflow/">airflow</a></li>
           
-          <li><a href="https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">调度系统</a></li>
+          <li><a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">调度系统</a></li>
           
         </ul>
       </div>
@@ -324,9 +324,9 @@ airflow webserver
     </div>
     <div class="list-group">
       
-      <a href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE" class="list-group-item">大数据</a>
+      <a href="http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE" class="list-group-item">大数据</a>
       
-      <a href="https://adamsunyu.github.io/categories/web" class="list-group-item">web</a>
+      <a href="http://tech.mwq365.cn/categories/web" class="list-group-item">web</a>
       
     </div>
   </section>
@@ -337,13 +337,13 @@ airflow webserver
     </div>
     <div class="list-group">
       
-      <a href="https://adamsunyu.github.io/tags/airflow" class="list-group-item">airflow</a>
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
       
-      <a href="https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
       
-      <a href="https://adamsunyu.github.io/tags/hugo" class="list-group-item">hugo</a>
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
       
-      <a href="https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
       
     </div>
   </section>

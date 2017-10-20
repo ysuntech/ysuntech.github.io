@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://adamsunyu.github.io/data/airflow-tutorial-2/">
+<link rel="canonical" href="http://tech.mwq365.cn/data/airflow-tutorial-2/">
 
 
     <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
 <meta property="og:title" content="Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://adamsunyu.github.io/data/airflow-tutorial-2/">
-<meta property="og:image" content="https://adamsunyu.github.io/images/default.png">
+<meta property="og:url" content="http://tech.mwq365.cn/data/airflow-tutorial-2/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
 <meta property="og:site_name" content="汇编吾信">
 <meta property="og:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。首先了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读取和分 执行器(executor) Web服务器(webserver)  常见问题 ">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="汇编吾信">
-<meta name="twitter:url" content="https://adamsunyu.github.io/data/airflow-tutorial-2/">
+<meta name="twitter:url" content="http://tech.mwq365.cn/data/airflow-tutorial-2/">
 <meta name="twitter:title" content="Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信">
 <meta name="twitter:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。首先了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读取和分 执行器(executor) Web服务器(webserver)  常见问题 ">
-<meta name="twitter:image" content="https://adamsunyu.github.io/images/default.png">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
 
 
 <script type="application/ld+json">
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https://adamsunyu.github.io/"
+      "@id":"http://tech.mwq365.cn/"
     },
     "headline": "Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信",
     "image": {
       "@type": "ImageObject",
-      "url": "https://adamsunyu.github.io/images/default.png",
+      "url": "http://tech.mwq365.cn/images/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "汇编吾信",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://adamsunyu.github.io/images/logo.png",
+        "url": "http://tech.mwq365.cn/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -76,7 +76,7 @@
 </script>
 
 
-    <link href="https://adamsunyu.github.io/css/styles.css" rel="stylesheet">
+    <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -105,7 +105,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://adamsunyu.github.io/">汇编吾信</a>
+            <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
           </div>
 
           
@@ -122,9 +122,9 @@
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://adamsunyu.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
-        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://adamsunyu.github.io/data/" itemprop="url"><span itemprop="title">data</span></a></li>
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/data/" itemprop="url"><span itemprop="title">data</span></a></li>
         
         <li class="active">Airflow调度系统教程【二】:分布式和常见问题</li>
       </ol>
@@ -134,7 +134,7 @@
   <header>
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T16:48:32JST">Oct 20, 2017</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://adamsunyu.github.io/data/">data</a></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
     </ul>
 
@@ -180,7 +180,7 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+          <li><a href="http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
           
         </ul>
       </div>
@@ -195,9 +195,9 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://adamsunyu.github.io/tags/airflow/">airflow</a></li>
+          <li><a href="http://tech.mwq365.cn/tags/airflow/">airflow</a></li>
           
-          <li><a href="https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">调度系统</a></li>
+          <li><a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">调度系统</a></li>
           
         </ul>
       </div>
@@ -225,9 +225,9 @@
     </div>
     <div class="list-group">
       
-      <a href="https://adamsunyu.github.io/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE" class="list-group-item">大数据</a>
+      <a href="http://tech.mwq365.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE" class="list-group-item">大数据</a>
       
-      <a href="https://adamsunyu.github.io/categories/web" class="list-group-item">web</a>
+      <a href="http://tech.mwq365.cn/categories/web" class="list-group-item">web</a>
       
     </div>
   </section>
@@ -238,13 +238,13 @@
     </div>
     <div class="list-group">
       
-      <a href="https://adamsunyu.github.io/tags/airflow" class="list-group-item">airflow</a>
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
       
-      <a href="https://adamsunyu.github.io/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
       
-      <a href="https://adamsunyu.github.io/tags/hugo" class="list-group-item">hugo</a>
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
       
-      <a href="https://adamsunyu.github.io/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
       
     </div>
   </section>
