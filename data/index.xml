@@ -6,7 +6,7 @@
     <description>Recent content in Data on 汇编吾信</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 20 Oct 2017 16:48:32 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 21 Oct 2017 04:00:00 +0800</lastBuildDate>
     
 	<atom:link href="http://tech.mwq365.cn/data/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,12 +14,12 @@
     <item>
       <title>Airflow调度系统教程【二】:分布式和常见问题</title>
       <link>http://tech.mwq365.cn/data/airflow-tutorial-2/</link>
-      <pubDate>Fri, 20 Oct 2017 16:48:32 +0800</pubDate>
+      <pubDate>Sat, 21 Oct 2017 04:00:00 +0800</pubDate>
       
       <guid>http://tech.mwq365.cn/data/airflow-tutorial-2/</guid>
       <description> 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。
-分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需要稍加配置，便可实现分布式调度。
-首先了解下Airflow中的几个核心概念:
+分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。
+首先我们了解下Airflow中的几个核心概念:
  DAG 调度器(scheduler): 调度器负责读取和分
  执行器(executor)
  Web服务器(webserver)
@@ -34,7 +34,7 @@
       <guid>http://tech.mwq365.cn/data/airflow-tutorial-1/</guid>
       <description>介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。
 这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。
-特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。
+特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。
  先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.</description>
     </item>
     

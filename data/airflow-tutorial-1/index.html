@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>Airflow调度系统教程【一】:安装 - 汇编吾信</title>
     
-<meta name="description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
+<meta name="description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
 
 <meta property="og:title" content="Airflow调度系统教程【一】:安装 - 汇编吾信">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://tech.mwq365.cn/data/airflow-tutorial-1/">
 <meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
 <meta property="og:site_name" content="汇编吾信">
-<meta property="og:description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
+<meta property="og:description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="汇编吾信">
 <meta name="twitter:url" content="http://tech.mwq365.cn/data/airflow-tutorial-1/">
 <meta name="twitter:title" content="Airflow调度系统教程【一】:安装 - 汇编吾信">
-<meta name="twitter:description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
+<meta name="twitter:description" content="介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.">
 <meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
 
 
@@ -67,7 +67,7 @@
     },
     "description": "介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。
 这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。
-特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。
+特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。
  先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2."
   }
 </script>
@@ -148,7 +148,7 @@
     <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T13:40:18JST">2017-10-20</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T13:40:18JST">2017-10-20 13:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
     </ul>
@@ -175,7 +175,7 @@
 <li>支持多种调度策略，包括分布式调度(通过Celery实现)；</li>
 <li>自带较为美观的Web UI，操作方便。</li>
 <li>自带日志查看，任务监控等常见功能；</li>
-<li>不能替代crontab，管理数据分析任务脚本以及其它cron任务。</li>
+<li>注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。</li>
 </ul>
 
 <h2 id="安装">安装</h2>
