@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信</title>
     
-<meta name="description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。首先我们了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读任务配置和分发任务 执行器(executor) Web服务器(webserver)  常见问题 ">
+<meta name="description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。在工作中，我们主要使用分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。首先我们了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读任务配置和分发任务 执行器(executor) Web服务器(webserver)  常见问题 ">
 
 <meta property="og:title" content="Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://tech.mwq365.cn/data/airflow-tutorial-2/">
 <meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
 <meta property="og:site_name" content="汇编吾信">
-<meta property="og:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。首先我们了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读任务配置和分发任务 执行器(executor) Web服务器(webserver)  常见问题 ">
+<meta property="og:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。在工作中，我们主要使用分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。首先我们了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读任务配置和分发任务 执行器(executor) Web服务器(webserver)  常见问题 ">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="汇编吾信">
 <meta name="twitter:url" content="http://tech.mwq365.cn/data/airflow-tutorial-2/">
 <meta name="twitter:title" content="Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信">
-<meta name="twitter:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。首先我们了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读任务配置和分发任务 执行器(executor) Web服务器(webserver)  常见问题 ">
+<meta name="twitter:description" content=" 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。在工作中，我们主要使用分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。首先我们了解下Airflow中的几个核心概念: DAG 调度器(scheduler): 调度器负责读任务配置和分发任务 执行器(executor) Web服务器(webserver)  常见问题 ">
 <meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
 
 
@@ -66,6 +66,7 @@
       }
     },
     "description": " 介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。
+在工作中，我们主要使用
 分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。
 首先我们了解下Airflow中的几个核心概念:
  DAG 调度器(scheduler): 调度器负责读任务配置和分发任务
@@ -167,6 +168,8 @@
 
 <p>这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。</p>
 
+<p>在工作中，我们主要使用</p>
+
 <h2 id="分布式">分布式</h2>
 
 <p>Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性，我们需要将系统改造为分布式。
@@ -202,6 +205,8 @@
           
           <li><a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/">调度系统</a></li>
           
+          <li><a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6/">分布式调度</a></li>
+          
         </ul>
       </div>
     </section>
@@ -233,6 +238,8 @@
       <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
       
       <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
       
       <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
       
