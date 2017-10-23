@@ -88,23 +88,24 @@
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T11:09:26JST">2017-10-23 11:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
+      <li>93 Words</li>
+      
+      
     </ul>
     <h2 class="title"><a href="http://tech.mwq365.cn/go/graceful/">GO语言平滑重启</a></h2>
   </header>
 
   
-  <div class="summary">背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。
-在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&rdquo;平滑重启&ldquo;？
-整体思路 新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
-技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号
-os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。
- 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：
-listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了
- 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。
-参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/
-但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。
-跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。
- 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&rdquo;站好最后一班岗&rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket</div>
+  <div class="summary"><h2 id="背景">背景</h2>
+
+<p>Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。</p>
+
+<p>在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 <em>不中断服务</em> 用户无感知 ，也就是&rdquo;<em>平滑重启</em>&ldquo;？</p>
+
+<h2 id="整体思路">整体思路</h2>
+
+<p>新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
+</p></div>
 
   <footer>
     <a href="http://tech.mwq365.cn/go/graceful/" title="GO语言平滑重启">Read More…</a>
@@ -118,15 +119,32 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T10:49:28JST">2017-10-23 10:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
+      <li>374 Words</li>
+      
+      
     </ul>
     <h2 class="title"><a href="http://tech.mwq365.cn/go/template-basic/">GO语言模板【一】：基本用法</a></h2>
   </header>
 
   
-  <div class="summary">介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。
-模板的基本用法 模板使用基本分为3个步骤:
- 声明模板 直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板
-func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &quot;female&quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&quot;adam&quot;, &quot;male&quot;}, {&quot;vicky&quot;, &quot;female&quot;}, } tpl := template.Must(template.New(&quot;t1&quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.</div>
+  <div class="summary"><h2 id="介绍">介绍</h2>
+
+<p>使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。</p>
+
+<h2 id="模板的基本用法">模板的基本用法</h2>
+
+<p>模板使用基本分为3个步骤:</p>
+
+<ol>
+<li>声明模板
+直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。</li>
+<li>解析|编译模板
+解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。</li>
+<li>给模板赋值，执行输出
+执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。</li>
+</ol>
+
+<p></p></div>
 
   <footer>
     <a href="http://tech.mwq365.cn/go/template-basic/" title="GO语言模板【一】：基本用法">Read More…</a>
@@ -140,27 +158,21 @@ func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-21T23:00:00JST">2017-10-21 23:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
+      <li>40 Words</li>
+      
+      
     </ul>
     <h2 class="title"><a href="http://tech.mwq365.cn/data/airflow-tutorial-2/">Airflow调度系统教程【二】:分布式和常见问题</a></h2>
   </header>
 
   
-  <div class="summary">介绍 这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。 在大数据统计工作中，我们有一系列的程序任务需要运行。这些任务运行时间长，任务之间往往存在依赖关系，再加上任务运行的系统环境稳定性较差，导致数据结果要么不能按时生成，要么生成的数据结果不正确。而且每次出现故障后，手动修复数据的效率低下。
-直到引入Airflow调度系统，这些问题都得到了较好的解决。Airflow对任务之间的依赖关系支持非常好。分布式部署更能提高任务处理效率和系统可用性。
-核心概念 首先了解下Airflow中的几个核心概念:
- DAG: 字面意思为&rdquo;有向无环图&rdquo;，在Airflow里指任务流程图。 通过Python代码的方式定义任务和任务间的依赖关系。这些任务组成一个&rdquo;有向无环图&rdquo; Operator: Operator是关于任务如何执行的定义。Operator实例化后成为Task，在DAG里对应一个节点。节点之间的连线代表任务间的依赖关系。用得比较读的Operator主要是BashOperator
- Sensor: 探测器，有些任务需要一些前置条件，比如是否到了某个时间，比如某个接口响应是否正常。Sensor可以用来检测是否满足条件。Sensor是特殊的Operator。
- Tasks: Operator实例化之后就是Task, Task代表流程图中的一个节点-一个需要运行的任务。
- 调度器(scheduler): 调度器负责读任务配置和检查任务是否满足运行条件，如果准备好，将任务送入队列。等待executor执行。
- 执行器(executor): 从队列中拉取任务，执行，然后将结果写回响应队列。
- Web服务器(webserver)： 提供web界面，一般和Scheduler同时部署。在web界面上可禁用流程图，管理任务，查看任务运行日志等。
-  分布式 Airflow默认配置下，调度和任务执行只能在单机运行。为了避免单点故障，提高系统的可用性和运行效率，我们将系统改造为分布式。 Airflow系统只需稍加配置，即可实现分布式调度。 首先需要将executor改为CeleryExecutor. 其次配置好Celery的backend。
-常见问题 常见问题主要有这么几种：
- 任务没有运行  可能是时间还没到。 注意，Airlfow DAG定义的startdate实际上是数据时间。对于一个startdate是2017-10-21 10:00:00，间隔为1天的任务来说，可能过了2017-10-21 11点，任务还没运行。实际上要等到10-22日10点，这个任务才能运行。按天统计任务一般都跑昨天的数据，这个概念倒也能理解。
-也可能是这个任务依赖的其它任务尚未完成。
-DAG定义代码有问题，导致DAG读取错误，无法运行。这个问题，注意个看错误提示就好。
-任务没有运行，还有一种可能是调度系统任务队列满了。同时运行的DAG和Task数目都是有限制的。一但达到上限，就绪态的任务也只能等待。
- 如何让一套调度系统给多个业务线使用  每个业务线使用单独的队列key即可。</div>
+  <div class="summary"><h2 id="介绍">介绍</h2>
+
+<p>这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。
+在大数据统计工作中，我们有一系列的程序任务需要运行。这些任务运行时间长，任务之间往往存在依赖关系，再加上任务运行的系统环境稳定性较差，导致数据结果要么不能按时生成，要么生成的数据结果不正确。而且每次出现故障后，手动修复数据的效率低下。</p>
+
+<p>直到引入Airflow调度系统，这些问题都得到了较好的解决。Airflow对任务之间的依赖关系支持非常好。分布式部署更能提高任务处理效率和系统可用性。
+</p></div>
 
   <footer>
     <a href="http://tech.mwq365.cn/data/airflow-tutorial-2/" title="Airflow调度系统教程【二】:分布式和常见问题">Read More…</a>
@@ -174,21 +186,36 @@ DAG定义代码有问题，导致DAG读取错误，无法运行。这个问题�
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T20:43:56JST">2017-10-20 20:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/web/">web</a></li>
       
+      <li>101 Words</li>
+      
+      
     </ul>
     <h2 class="title"><a href="http://tech.mwq365.cn/web/blog-with-hugo/">使用hugo搭建博客系统</a></h2>
   </header>
 
   
-  <div class="summary">介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。
-搭建博客 让我们开始吧,按步骤来：
- 下载hugo软件，图省事可以直接下载二进制版本
- 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo
- 初始化博客项目
-cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点
-cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容
-languageCode = &quot;zh-CN&quot; baseurl = &quot;https://mytestaccout.github.io/&quot; title = &quot;我的博客小站&quot; theme = &quot;beg&quot; #googleAnalytics = &quot;UA-XXXXXXXX-XX&quot; # Optional #disqusShortname = &quot;XYW&quot; [params] dateformat = &quot;Jan 2, 2006&quot; # Optional  其中mytestaccout需要替换为自己的github账号
- 写一篇博客
-hugo new mydir/post1.</div>
+  <div class="summary"><h2 id="介绍">介绍</h2>
+
+<p>作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。</p>
+
+<h2 id="搭建博客">搭建博客</h2>
+
+<p>让我们开始吧,按步骤来：</p>
+
+<ol>
+<li><p>下载hugo软件，图省事可以直接下载二进制版本</p></li>
+
+<li><p>将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo</p></li>
+
+<li><p>初始化博客项目</p>
+
+<pre><code class="language-bash">cd ~
+# 创建名为hugo_blog的博客站点
+hugo new site hugo_blog
+</code></pre></li>
+</ol>
+
+<p></p></div>
 
   <footer>
     <a href="http://tech.mwq365.cn/web/blog-with-hugo/" title="使用hugo搭建博客系统">Read More…</a>
@@ -202,15 +229,33 @@ hugo new mydir/post1.</div>
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T13:40:18JST">2017-10-20 13:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
+      <li>134 Words</li>
+      
+      
     </ul>
     <h2 class="title"><a href="http://tech.mwq365.cn/data/airflow-tutorial-1/">Airflow调度系统教程【一】:安装</a></h2>
   </header>
 
   
-  <div class="summary">介绍 Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。
-这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。
-特点  Airflow是一个通用型任务调度系统，使用Python编写 任务调度使用Python代码定义，比较灵活； 支持任务间的依赖关系； 支持多种调度策略，包括分布式调度(通过Celery实现)； 自带较为美观的Web UI，操作方便。 自带日志查看，任务监控等常见功能； 注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。  安装 需要python2.7 以上版本，建议使用pip安装；使用virtualenv建立隔离环境。
- 先安装Python2.7。如果没有特权账号，可下载anaconda2发行版安装。 然后下载setuptools,安装easy_install：https://pypi.python.org/pypi/setuptools 安装MySQL-Python包  yum install mysql-devel.x86_64 wget --no-check-certificate -c https://sourceforge.net/projects/mysql-python/files/mysql-python/1.2.3/MySQL-python-1.2.3.tar.gz/download mv download MySQL-python-1.2.3.tgz tar xvzf MySQL-python-1.2.3.tgz cd MySQL-python-1.2.3 python setup.py install   安装pip  wget -c --no-check-certificate https://bootstrap.pypa.io/get-pip.py export http_proxy=proxy.example.net:8080 export https_proxy=proxy.example.net:8080 python2.7 get-pip.py   安装virtualenv  pip2.7 install virtualenv   创建单独的python2.7环境  su adam cd mkdir pythonenvs cd pythonenvs virtualenv -p /usr/local/bin/python2.</div>
+  <div class="summary"><h2 id="介绍">介绍</h2>
+
+<p>Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。</p>
+
+<p>这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。</p>
+
+<h2 id="特点">特点</h2>
+
+<ul>
+<li>Airflow是一个通用型任务调度系统，使用Python编写</li>
+<li>任务调度使用Python代码定义，比较灵活；</li>
+<li>支持任务间的依赖关系；</li>
+<li>支持多种调度策略，包括分布式调度(通过Celery实现)；</li>
+<li>自带较为美观的Web UI，操作方便。</li>
+<li>自带日志查看，任务监控等常见功能；</li>
+<li>注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。</li>
+</ul>
+
+<p></p></div>
 
   <footer>
     <a href="http://tech.mwq365.cn/data/airflow-tutorial-1/" title="Airflow调度系统教程【一】:安装">Read More…</a>
@@ -279,16 +324,6 @@ hugo new mydir/post1.</div>
     <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-   </script>
     
   </body>
 </html>

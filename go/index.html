@@ -92,23 +92,24 @@
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T11:09:26JST">2017-10-23 11:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
+      <li>93 Words</li>
+      
+      
     </ul>
     <h2 class="title"><a href="http://tech.mwq365.cn/go/graceful/">GO语言平滑重启</a></h2>
   </header>
 
   
-  <div class="summary">背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。
-在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&rdquo;平滑重启&ldquo;？
-整体思路 新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
-技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号
-os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。
- 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：
-listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了
- 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。
-参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/
-但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。
-跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。
- 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&rdquo;站好最后一班岗&rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket</div>
+  <div class="summary"><h2 id="背景">背景</h2>
+
+<p>Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。</p>
+
+<p>在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 <em>不中断服务</em> 用户无感知 ，也就是&rdquo;<em>平滑重启</em>&ldquo;？</p>
+
+<h2 id="整体思路">整体思路</h2>
+
+<p>新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
+</p></div>
 
   <footer>
     <a href="http://tech.mwq365.cn/go/graceful/" title="GO语言平滑重启">Read More…</a>
@@ -122,15 +123,32 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T10:49:28JST">2017-10-23 10:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
+      <li>374 Words</li>
+      
+      
     </ul>
     <h2 class="title"><a href="http://tech.mwq365.cn/go/template-basic/">GO语言模板【一】：基本用法</a></h2>
   </header>
 
   
-  <div class="summary">介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。
-模板的基本用法 模板使用基本分为3个步骤:
- 声明模板 直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板
-func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &quot;female&quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&quot;adam&quot;, &quot;male&quot;}, {&quot;vicky&quot;, &quot;female&quot;}, } tpl := template.Must(template.New(&quot;t1&quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.</div>
+  <div class="summary"><h2 id="介绍">介绍</h2>
+
+<p>使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。</p>
+
+<h2 id="模板的基本用法">模板的基本用法</h2>
+
+<p>模板使用基本分为3个步骤:</p>
+
+<ol>
+<li>声明模板
+直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。</li>
+<li>解析|编译模板
+解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。</li>
+<li>给模板赋值，执行输出
+执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。</li>
+</ol>
+
+<p></p></div>
 
   <footer>
     <a href="http://tech.mwq365.cn/go/template-basic/" title="GO语言模板【一】：基本用法">Read More…</a>
@@ -199,16 +217,6 @@ func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .
     <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-   </script>
     
   </body>
 </html>

@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>使用hugo搭建博客系统 - 汇编吾信</title>
     
-<meta name="description" content="介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。搭建博客 让我们开始吧,按步骤来： 下载hugo软件，图省事可以直接下载二进制版本 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo 初始化博客项目cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容languageCode = &amp;quot;zh-CN&amp;quot; baseurl = &amp;quot;https://mytestaccout.github.io/&amp;quot; title = &amp;quot;我的博客小站&amp;quot; theme = &amp;quot;beg&amp;quot; #googleAnalytics = &amp;quot;UA-XXXXXXXX-XX&amp;quot; # Optional #disqusShortname = &amp;quot;XYW&amp;quot; [params] dateformat = &amp;quot;Jan 2, 2006&amp;quot; # Optional  其中mytestaccout需要替换为自己的github账号 写一篇博客hugo new mydir/post1.">
+<meta name="description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。&lt;/p&gt;&lt;h2 id=&#34;搭建博客&#34;&gt;搭建博客&lt;/h2&gt;&lt;p&gt;让我们开始吧,按步骤来：&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;p&gt;下载hugo软件，图省事可以直接下载二进制版本&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;初始化博客项目&lt;/p&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~# 创建名为hugo_blog的博客站点hugo new site hugo_blog&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;/p&gt;">
 
 <meta property="og:title" content="使用hugo搭建博客系统 - 汇编吾信">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://tech.mwq365.cn/web/blog-with-hugo/">
 <meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
 <meta property="og:site_name" content="汇编吾信">
-<meta property="og:description" content="介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。搭建博客 让我们开始吧,按步骤来： 下载hugo软件，图省事可以直接下载二进制版本 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo 初始化博客项目cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容languageCode = &amp;quot;zh-CN&amp;quot; baseurl = &amp;quot;https://mytestaccout.github.io/&amp;quot; title = &amp;quot;我的博客小站&amp;quot; theme = &amp;quot;beg&amp;quot; #googleAnalytics = &amp;quot;UA-XXXXXXXX-XX&amp;quot; # Optional #disqusShortname = &amp;quot;XYW&amp;quot; [params] dateformat = &amp;quot;Jan 2, 2006&amp;quot; # Optional  其中mytestaccout需要替换为自己的github账号 写一篇博客hugo new mydir/post1.">
+<meta property="og:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。&lt;/p&gt;&lt;h2 id=&#34;搭建博客&#34;&gt;搭建博客&lt;/h2&gt;&lt;p&gt;让我们开始吧,按步骤来：&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;p&gt;下载hugo软件，图省事可以直接下载二进制版本&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;初始化博客项目&lt;/p&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~# 创建名为hugo_blog的博客站点hugo new site hugo_blog&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;/p&gt;">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="汇编吾信">
 <meta name="twitter:url" content="http://tech.mwq365.cn/web/blog-with-hugo/">
 <meta name="twitter:title" content="使用hugo搭建博客系统 - 汇编吾信">
-<meta name="twitter:description" content="介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。搭建博客 让我们开始吧,按步骤来： 下载hugo软件，图省事可以直接下载二进制版本 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo 初始化博客项目cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容languageCode = &amp;quot;zh-CN&amp;quot; baseurl = &amp;quot;https://mytestaccout.github.io/&amp;quot; title = &amp;quot;我的博客小站&amp;quot; theme = &amp;quot;beg&amp;quot; #googleAnalytics = &amp;quot;UA-XXXXXXXX-XX&amp;quot; # Optional #disqusShortname = &amp;quot;XYW&amp;quot; [params] dateformat = &amp;quot;Jan 2, 2006&amp;quot; # Optional  其中mytestaccout需要替换为自己的github账号 写一篇博客hugo new mydir/post1.">
+<meta name="twitter:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。&lt;/p&gt;&lt;h2 id=&#34;搭建博客&#34;&gt;搭建博客&lt;/h2&gt;&lt;p&gt;让我们开始吧,按步骤来：&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;p&gt;下载hugo软件，图省事可以直接下载二进制版本&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&amp;rdquo;hugo&amp;rdquo;随时调用hugo&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;初始化博客项目&lt;/p&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~# 创建名为hugo_blog的博客站点hugo new site hugo_blog&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;/p&gt;">
 <meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
 
 
@@ -65,16 +65,28 @@
         "height": 60
       }
     },
-    "description": "介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。
-搭建博客 让我们开始吧,按步骤来：
- 下载hugo软件，图省事可以直接下载二进制版本
- 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo
- 初始化博客项目
-cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点
-cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容
-languageCode = &quot;zh-CN&quot; baseurl = &quot;https://mytestaccout.github.io/&quot; title = &quot;我的博客小站&quot; theme = &quot;beg&quot; #googleAnalytics = &quot;UA-XXXXXXXX-XX&quot; # Optional #disqusShortname = &quot;XYW&quot; [params] dateformat = &quot;Jan 2, 2006&quot; # Optional  其中mytestaccout需要替换为自己的github账号
- 写一篇博客
-hugo new mydir/post1."
+    "description": "<h2 id="介绍">介绍</h2>
+
+<p>作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。</p>
+
+<h2 id="搭建博客">搭建博客</h2>
+
+<p>让我们开始吧,按步骤来：</p>
+
+<ol>
+<li><p>下载hugo软件，图省事可以直接下载二进制版本</p></li>
+
+<li><p>将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo</p></li>
+
+<li><p>初始化博客项目</p>
+
+<pre><code class="language-bash">cd ~
+# 创建名为hugo_blog的博客站点
+hugo new site hugo_blog
+</code></pre></li>
+</ol>
+
+<p></p>"
   }
 </script>
 
@@ -157,6 +169,9 @@ hugo new mydir/post1."
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T20:43:56JST">2017-10-20 20:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/web/">web</a></li>
       
+      <li>101 Words</li>
+      
+      
     </ul>
 
     <h1 class="title">使用hugo搭建博客系统</h1>
@@ -164,9 +179,7 @@ hugo new mydir/post1."
 
   
 
-  <div class="article-body">
-
-<h2 id="介绍">介绍</h2>
+  <div class="article-body"><h2 id="介绍">介绍</h2>
 
 <p>作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。</p>
 
@@ -185,7 +198,11 @@ hugo new mydir/post1."
 # 创建名为hugo_blog的博客站点
 hugo new site hugo_blog
 </code></pre></li>
+</ol>
 
+<p></p>
+
+<ol>
 <li><p>设置主题，配置站点</p>
 
 <pre><code class="language-bash">cd hugo_blog/themes
@@ -254,8 +271,7 @@ categories: [&quot;大数据&quot;]
 
 <p>不付费的话github.com上的repo只能为public，我们可以将自己的hugo站点(包括md文件)提交到oschina上的git</p>
 
-<p>PS: 本站点就是使用hugo和github pages搭建而成</p>
-</div>
+<p>PS: 本站点就是使用hugo和github pages搭建而成</p></div>
 
   <footer class="article-footer">
     
@@ -340,16 +356,6 @@ categories: [&quot;大数据&quot;]
     <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-   </script>
     
   </body>
 </html>

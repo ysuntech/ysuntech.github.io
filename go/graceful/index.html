@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>GO语言平滑重启 - 汇编吾信</title>
     
-<meta name="description" content="背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&amp;rdquo;平滑重启&amp;ldquo;？整体思路 新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&amp;rdquo;站好最后一班岗&amp;rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket">
+<meta name="description" content="&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&lt;p&gt;Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。&lt;/p&gt;&lt;p&gt;在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 &lt;em&gt;不中断服务&lt;/em&gt; 用户无感知 ，也就是&amp;rdquo;&lt;em&gt;平滑重启&lt;/em&gt;&amp;ldquo;？&lt;/p&gt;&lt;h2 id=&#34;整体思路&#34;&gt;整体思路&lt;/h2&gt;&lt;p&gt;新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成&lt;/p&gt;">
 
 <meta property="og:title" content="GO语言平滑重启 - 汇编吾信">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://tech.mwq365.cn/go/graceful/">
 <meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
 <meta property="og:site_name" content="汇编吾信">
-<meta property="og:description" content="背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&amp;rdquo;平滑重启&amp;ldquo;？整体思路 新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&amp;rdquo;站好最后一班岗&amp;rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket">
+<meta property="og:description" content="&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&lt;p&gt;Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。&lt;/p&gt;&lt;p&gt;在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 &lt;em&gt;不中断服务&lt;/em&gt; 用户无感知 ，也就是&amp;rdquo;&lt;em&gt;平滑重启&lt;/em&gt;&amp;ldquo;？&lt;/p&gt;&lt;h2 id=&#34;整体思路&#34;&gt;整体思路&lt;/h2&gt;&lt;p&gt;新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成&lt;/p&gt;">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="汇编吾信">
 <meta name="twitter:url" content="http://tech.mwq365.cn/go/graceful/">
 <meta name="twitter:title" content="GO语言平滑重启 - 汇编吾信">
-<meta name="twitter:description" content="背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&amp;rdquo;平滑重启&amp;ldquo;？整体思路 新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&amp;rdquo;站好最后一班岗&amp;rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket">
+<meta name="twitter:description" content="&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&lt;p&gt;Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。&lt;/p&gt;&lt;p&gt;在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 &lt;em&gt;不中断服务&lt;/em&gt; 用户无感知 ，也就是&amp;rdquo;&lt;em&gt;平滑重启&lt;/em&gt;&amp;ldquo;？&lt;/p&gt;&lt;h2 id=&#34;整体思路&#34;&gt;整体思路&lt;/h2&gt;&lt;p&gt;新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成&lt;/p&gt;">
 <meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
 
 
@@ -65,18 +65,16 @@
         "height": 60
       }
     },
-    "description": "背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。
-在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&rdquo;平滑重启&ldquo;？
-整体思路 新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
-技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号
-os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。
- 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：
-listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了
- 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。
-参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/
-但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。
-跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。
- 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&rdquo;站好最后一班岗&rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket"
+    "description": "<h2 id="背景">背景</h2>
+
+<p>Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。</p>
+
+<p>在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 <em>不中断服务</em> 用户无感知 ，也就是&rdquo;<em>平滑重启</em>&ldquo;？</p>
+
+<h2 id="整体思路">整体思路</h2>
+
+<p>新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
+</p>"
   }
 </script>
 
@@ -159,6 +157,9 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T11:09:26JST">2017-10-23 11:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
+      <li>93 Words</li>
+      
+      
     </ul>
 
     <h1 class="title">GO语言平滑重启</h1>
@@ -166,9 +167,7 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
 
   
 
-  <div class="article-body">
-
-<h2 id="背景">背景</h2>
+  <div class="article-body"><h2 id="背景">背景</h2>
 
 <p>Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。</p>
 
@@ -176,7 +175,8 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
 
 <h2 id="整体思路">整体思路</h2>
 
-<p>新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成</p>
+<p>新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
+</p>
 
 <h2 id="技术分析">技术分析</h2>
 
@@ -243,8 +243,7 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
 <li>Linux文件描述符 <a href="http://www.jianshu.com/p/430340c4a37a">http://www.jianshu.com/p/430340c4a37a</a></li>
 <li>文件描述符传递 <a href="http://tonybai.com/2006/06/01/passing-file-descriptor/">http://tonybai.com/2006/06/01/passing-file-descriptor/</a></li>
 <li>文件句柄、文件描述符与进程和多线程的那些事 <a href="https://my.oschina.net/iuranus/blog/330397">https://my.oschina.net/iuranus/blog/330397</a></li>
-</ul>
-</div>
+</ul></div>
 
   <footer class="article-footer">
     
@@ -327,16 +326,6 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
     <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-   </script>
     
   </body>
 </html>

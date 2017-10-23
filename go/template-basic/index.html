@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>GO语言模板【一】：基本用法 - 汇编吾信</title>
     
-<meta name="description" content="介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。模板的基本用法 模板使用基本分为3个步骤: 声明模板 直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &amp;quot;female&amp;quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&amp;quot;adam&amp;quot;, &amp;quot;male&amp;quot;}, {&amp;quot;vicky&amp;quot;, &amp;quot;female&amp;quot;}, } tpl := template.Must(template.New(&amp;quot;t1&amp;quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.">
+<meta name="description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。&lt;/p&gt;&lt;h2 id=&#34;模板的基本用法&#34;&gt;模板的基本用法&lt;/h2&gt;&lt;p&gt;模板使用基本分为3个步骤:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;声明模板直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。&lt;/li&gt;&lt;li&gt;解析|编译模板解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。&lt;/li&gt;&lt;li&gt;给模板赋值，执行输出执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;/p&gt;">
 
 <meta property="og:title" content="GO语言模板【一】：基本用法 - 汇编吾信">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://tech.mwq365.cn/go/template-basic/">
 <meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
 <meta property="og:site_name" content="汇编吾信">
-<meta property="og:description" content="介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。模板的基本用法 模板使用基本分为3个步骤: 声明模板 直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &amp;quot;female&amp;quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&amp;quot;adam&amp;quot;, &amp;quot;male&amp;quot;}, {&amp;quot;vicky&amp;quot;, &amp;quot;female&amp;quot;}, } tpl := template.Must(template.New(&amp;quot;t1&amp;quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.">
+<meta property="og:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。&lt;/p&gt;&lt;h2 id=&#34;模板的基本用法&#34;&gt;模板的基本用法&lt;/h2&gt;&lt;p&gt;模板使用基本分为3个步骤:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;声明模板直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。&lt;/li&gt;&lt;li&gt;解析|编译模板解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。&lt;/li&gt;&lt;li&gt;给模板赋值，执行输出执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;/p&gt;">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="汇编吾信">
 <meta name="twitter:url" content="http://tech.mwq365.cn/go/template-basic/">
 <meta name="twitter:title" content="GO语言模板【一】：基本用法 - 汇编吾信">
-<meta name="twitter:description" content="介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。模板的基本用法 模板使用基本分为3个步骤: 声明模板 直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &amp;quot;female&amp;quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&amp;quot;adam&amp;quot;, &amp;quot;male&amp;quot;}, {&amp;quot;vicky&amp;quot;, &amp;quot;female&amp;quot;}, } tpl := template.Must(template.New(&amp;quot;t1&amp;quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.">
+<meta name="twitter:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。&lt;/p&gt;&lt;h2 id=&#34;模板的基本用法&#34;&gt;模板的基本用法&lt;/h2&gt;&lt;p&gt;模板使用基本分为3个步骤:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;声明模板直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。&lt;/li&gt;&lt;li&gt;解析|编译模板解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。&lt;/li&gt;&lt;li&gt;给模板赋值，执行输出执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;/p&gt;">
 <meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
 
 
@@ -65,10 +65,24 @@
         "height": 60
       }
     },
-    "description": "介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。
-模板的基本用法 模板使用基本分为3个步骤:
- 声明模板 直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板
-func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &quot;female&quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&quot;adam&quot;, &quot;male&quot;}, {&quot;vicky&quot;, &quot;female&quot;}, } tpl := template.Must(template.New(&quot;t1&quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template."
+    "description": "<h2 id="介绍">介绍</h2>
+
+<p>使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。</p>
+
+<h2 id="模板的基本用法">模板的基本用法</h2>
+
+<p>模板使用基本分为3个步骤:</p>
+
+<ol>
+<li>声明模板
+直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。</li>
+<li>解析|编译模板
+解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。</li>
+<li>给模板赋值，执行输出
+执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。</li>
+</ol>
+
+<p></p>"
   }
 </script>
 
@@ -151,6 +165,9 @@ func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T10:49:28JST">2017-10-23 10:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
+      <li>374 Words</li>
+      
+      
     </ul>
 
     <h1 class="title">GO语言模板【一】：基本用法</h1>
@@ -158,9 +175,7 @@ func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .
 
   
 
-  <div class="article-body">
-
-<h2 id="介绍">介绍</h2>
+  <div class="article-body"><h2 id="介绍">介绍</h2>
 
 <p>使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。</p>
 
@@ -176,6 +191,8 @@ func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .
 <li>给模板赋值，执行输出
 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。</li>
 </ol>
+
+<p></p>
 
 <p>下面看几个例子:
 例1： 字符串模板</p>
@@ -353,8 +370,7 @@ func Test_Helper() {
     
     //tmp1和tmp2是两个子类，它们有不同的t2块定义，互不影响。
 }
-</code></pre>
-</div>
+</code></pre></div>
 
   <footer class="article-footer">
     
@@ -437,16 +453,6 @@ func Test_Helper() {
     <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
-    
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-   </script>
     
   </body>
 </html>
