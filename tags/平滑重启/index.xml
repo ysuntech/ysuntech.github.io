@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Gos on 汇编吾信</title>
-    <link>http://tech.mwq365.cn/go/</link>
-    <description>Recent content in Gos on 汇编吾信</description>
+    <title>平滑重启 on 汇编吾信</title>
+    <link>http://tech.mwq365.cn/tags/%E5%B9%B3%E6%BB%91%E9%87%8D%E5%90%AF/</link>
+    <description>Recent content in 平滑重启 on 汇编吾信</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Mon, 23 Oct 2017 11:09:26 +0800</lastBuildDate>
     
-	<atom:link href="http://tech.mwq365.cn/go/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://tech.mwq365.cn/tags/%E5%B9%B3%E6%BB%91%E9%87%8D%E5%90%AF/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -29,18 +29,6 @@ listen tcp :8021: bind: Only one usage of each socket address (protocol/network 
 但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。
 跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。
  老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&amp;rdquo;站好最后一班岗&amp;rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket</description>
-    </item>
-    
-    <item>
-      <title>GO语言模板【一】：基本用法</title>
-      <link>http://tech.mwq365.cn/go/template-basic/</link>
-      <pubDate>Mon, 23 Oct 2017 10:49:28 +0800</pubDate>
-      
-      <guid>http://tech.mwq365.cn/go/template-basic/</guid>
-      <description>介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。
-模板的基本用法 模板使用基本分为3个步骤:
- 声明模板 直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板
-func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &amp;quot;female&amp;quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&amp;quot;adam&amp;quot;, &amp;quot;male&amp;quot;}, {&amp;quot;vicky&amp;quot;, &amp;quot;female&amp;quot;}, } tpl := template.Must(template.New(&amp;quot;t1&amp;quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.</description>
     </item>
     
   </channel>

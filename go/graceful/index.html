@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="http://tech.mwq365.cn/go/graceful/">
+
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>GO语言平滑重启 - 汇编吾信</title>
+    
+<meta name="description" content="背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&amp;rdquo;平滑重启&amp;ldquo;？整体思路 新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&amp;rdquo;站好最后一班岗&amp;rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket">
+
+<meta property="og:title" content="GO语言平滑重启 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tech.mwq365.cn/go/graceful/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&amp;rdquo;平滑重启&amp;ldquo;？整体思路 新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&amp;rdquo;站好最后一班岗&amp;rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="http://tech.mwq365.cn/go/graceful/">
+<meta name="twitter:title" content="GO语言平滑重启 - 汇编吾信">
+<meta name="twitter:description" content="背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&amp;rdquo;平滑重启&amp;ldquo;？整体思路 新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&amp;rdquo;站好最后一班岗&amp;rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://tech.mwq365.cn/"
+    },
+    "headline": "GO语言平滑重启 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://tech.mwq365.cn/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-23T11:09:26JST",
+    "dateModified": "2017-10-23T11:09:26JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://tech.mwq365.cn/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "背景 Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。
+在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 不中断服务 用户无感知 ，也就是&rdquo;平滑重启&ldquo;？
+整体思路 新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
+技术分析  重启如何操作  程序中设置信号处理方法；通过命令行向进程发送信号
+os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。
+ 如何让新进程接收并处理新的请求  我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：
+listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.  正确的做法是复用原有的listener socket，那么新的问题来了
+ 如何在进程间传递socket  unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。 好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。
+参考: https://blog.kghost.info/2013/04/27/fork-multi-thread/
+但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。
+跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。
+ 老进程如何“优雅”退出  父进程在退出前需要完成这么几件事: - 停止从listener socket获取新的客户端连接 - 完成重启过程中还没finish的请求，&rdquo;站好最后一班岗&rdquo; - 为了避免长时间的等待，需要设置超时，关闭keepalive - 关闭listener socket"
+  }
+</script>
+
+
+    <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
+    
+  </head>
+
+  <body>
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+          </div>
+
+          
+          <div id="navbar" class="collapse navbar-collapse">
+            
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              <li><a href="/data/">大数据</a></li>
+              
+              
+              
+              <li><a href="/db/">数据库</a></li>
+              
+              
+              
+              <li><a href="/go/">GO语言</a></li>
+              
+              
+              
+              <li><a href="/ops/">服务器运维</a></li>
+              
+              
+              
+              <li><a href="/spiders/">爬虫</a></li>
+              
+              
+              
+              <li><a href="/web/">WEB</a></li>
+              
+              
+            </ul>
+            
+          </div>
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/go/" itemprop="url"><span itemprop="title">go</span></a></li>
+        
+        <li class="active">GO语言平滑重启</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T11:09:26JST">2017-10-23 11:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
+      
+    </ul>
+
+    <h1 class="title">GO语言平滑重启</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h2 id="背景">背景</h2>
+
+<p>Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。</p>
+
+<p>在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 <em>不中断服务</em> 用户无感知 ，也就是&rdquo;<em>平滑重启</em>&ldquo;？</p>
+
+<h2 id="整体思路">整体思路</h2>
+
+<p>新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成</p>
+
+<h2 id="技术分析">技术分析</h2>
+
+<ul>
+<li>重启如何操作</li>
+</ul>
+
+<p>程序中设置信号处理方法；通过命令行向进程发送信号</p>
+
+<p>os/signal 提供了相关功能。 配置好信号接收管道，程序中从管道获取信号，按需处理即可。</p>
+
+<ul>
+<li>如何让新进程接收并处理新的请求</li>
+</ul>
+
+<p>我们的服务一般会监听端口，重启后的进程也需要监听相同端口。如果直接从头Bind，系统会直接报错：</p>
+
+<pre><code class="language-bash">listen tcp :8021: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+</code></pre>
+
+<p>正确的做法是复用原有的listener socket，那么新的问题来了</p>
+
+<ul>
+<li>如何在进程间传递socket</li>
+</ul>
+
+<p>unix环境下，一切皆文件。socket也是文件。貌似跨文件读同一个文件很正常。但socket比较特殊，我们并不能像普通文件那样按文件名重新打开，然后使用。
+好在*nix环境下父子进程是可以共享文件描述符的。准确的说是fork之后，子进程获得了和父进程一样的文件描述符表。但如果接下来exec，并且文件打开时设置了CLOSE_ON_EXEC标志位，这些文件会被关闭。好不容易共享到的文件描述符全都失效。而且在Go语言中，此标记默认打开。</p>
+
+<p>参考: <a href="https://blog.kghost.info/2013/04/27/fork-multi-thread/">https://blog.kghost.info/2013/04/27/fork-multi-thread/</a></p>
+
+<p>但是Go语言也考虑到了共享文件描述符的需求，在os/exec包中可以新建Cmd结构，并设置 ExtraFiles 字段，实现共享文件描述符。</p>
+
+<p>跨进程共享socket问题解决了，这时新老进程都可以读写listener socket。</p>
+
+<ul>
+<li>老进程如何“优雅”退出</li>
+</ul>
+
+<p>父进程在退出前需要完成这么几件事:
+ - 停止从listener socket获取新的客户端连接
+ - 完成重启过程中还没finish的请求，&rdquo;站好最后一班岗&rdquo;
+ - 为了避免长时间的等待，需要设置超时，关闭keepalive
+ - 关闭listener socket</p>
+
+<p>所有工作完成后，父进程方可退出。</p>
+
+<ul>
+<li>避免交接&rdquo;空白期&rdquo;</li>
+</ul>
+
+<p>父进程收到信号后可能会很快退出，甚至赶在子进程尚未准备好&rdquo;接班&rdquo;前。在这段空白期内，如果有大量请求涌入，会导致操作系统TCP“已完成队列”爆掉。 参考: <a href="http://www.jianshu.com/p/fe2228a77429">http://www.jianshu.com/p/fe2228a77429</a></p>
+
+<p>比较稳妥的做法是：fork之后，父进程继续accept和处理请求，子进程就绪后，发送信号给父进程，提醒父进程退出。 然后父进程进入&rdquo;优雅&rdquo;退出流程。</p>
+
+<h2 id="参考资料">参考资料：</h2>
+
+<ul>
+<li>介绍平滑重启的博文 <a href="https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/">https://grisha.org/blog/2014/06/03/graceful-restart-in-golang/</a></li>
+<li>endless库，参考了资料1 <a href="https://github.com/fvbock/endless/">https://github.com/fvbock/endless/</a></li>
+<li>facebook grace库 <a href="https://github.com/facebookgo/grace">https://github.com/facebookgo/grace</a></li>
+<li>中文博客，比较简单 <a href="http://kuangchanglang.com/golang/2017/04/27/golang-graceful-restart">http://kuangchanglang.com/golang/2017/04/27/golang-graceful-restart</a></li>
+<li>另一篇博客，用了syscall.ForkExec <a href="http://tabalt.net/blog/graceful-http-server-for-golang/">http://tabalt.net/blog/graceful-http-server-for-golang/</a></li>
+<li>Linux文件描述符 <a href="http://www.jianshu.com/p/430340c4a37a">http://www.jianshu.com/p/430340c4a37a</a></li>
+<li>文件描述符传递 <a href="http://tonybai.com/2006/06/01/passing-file-descriptor/">http://tonybai.com/2006/06/01/passing-file-descriptor/</a></li>
+<li>文件句柄、文件描述符与进程和多线程的那些事 <a href="https://my.oschina.net/iuranus/blog/330397">https://my.oschina.net/iuranus/blog/330397</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://tech.mwq365.cn/tags/%E5%B9%B3%E6%BB%91%E9%87%8D%E5%90%AF/">平滑重启</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%B9%B3%E6%BB%91%E9%87%8D%E5%90%AF" class="list-group-item">平滑重启</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF" class="list-group-item">模板</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; 汇编吾信</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+   </script>
+    
+  </body>
+</html>
+
