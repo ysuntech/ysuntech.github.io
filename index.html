@@ -85,6 +85,28 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T10:49:28JST">2017-10-23 10:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
+      
+    </ul>
+    <h2 class="title"><a href="http://tech.mwq365.cn/go/template-basic/">GO语言模板【一】：基本用法</a></h2>
+  </header>
+
+  
+  <div class="summary">介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。
+模板的基本用法 模板使用基本分为3个步骤:
+ 声明模板 直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板
+func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &quot;female&quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&quot;adam&quot;, &quot;male&quot;}, {&quot;vicky&quot;, &quot;female&quot;}, } tpl := template.Must(template.New(&quot;t1&quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.</div>
+
+  <footer>
+    <a href="http://tech.mwq365.cn/go/template-basic/" title="GO语言模板【一】：基本用法">Read More…</a>
+  </footer>
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-21T23:00:00JST">2017-10-21 23:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
@@ -194,6 +216,8 @@ hugo new mydir/post1.</div>
       <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
       
       <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF" class="list-group-item">模板</a>
       
     </div>
   </section>

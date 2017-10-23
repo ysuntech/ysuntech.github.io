@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.30.2" />
 
-<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/index.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF/index.xml">
 
-<link rel="canonical" href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/">
+<link rel="canonical" href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF/">
 
 
     <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>博客系统 - 汇编吾信</title>
+    <title>模板 - 汇编吾信</title>
     
     <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
     
@@ -80,7 +80,7 @@
 
     
     <header class="page-header">
-      <h1>博客系统</h1>
+      <h1>模板</h1>
     </header>
     
 
@@ -89,27 +89,21 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T20:43:56JST">2017-10-20 20:00</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/web/">web</a></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T10:49:28JST">2017-10-23 10:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
     </ul>
-    <h2 class="title"><a href="http://tech.mwq365.cn/web/blog-with-hugo/">使用hugo搭建博客系统</a></h2>
+    <h2 class="title"><a href="http://tech.mwq365.cn/go/template-basic/">GO语言模板【一】：基本用法</a></h2>
   </header>
 
   
-  <div class="summary">介绍 作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。
-搭建博客 让我们开始吧,按步骤来：
- 下载hugo软件，图省事可以直接下载二进制版本
- 将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo
- 初始化博客项目
-cd ~ # 创建名为hugo_blog的博客站点 hugo new site hugo_blog  设置主题，配置站点
-cd hugo_blog/themes # 这里我们使用beg 主题 git clone https://github.com/dim0627/hugo_theme_beg.git beg # 修改配置文件 vim hugo_blog/config.toml  修改内容
-languageCode = &quot;zh-CN&quot; baseurl = &quot;https://mytestaccout.github.io/&quot; title = &quot;我的博客小站&quot; theme = &quot;beg&quot; #googleAnalytics = &quot;UA-XXXXXXXX-XX&quot; # Optional #disqusShortname = &quot;XYW&quot; [params] dateformat = &quot;Jan 2, 2006&quot; # Optional  其中mytestaccout需要替换为自己的github账号
- 写一篇博客
-hugo new mydir/post1.</div>
+  <div class="summary">介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。
+模板的基本用法 模板使用基本分为3个步骤:
+ 声明模板 直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板
+func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &quot;female&quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&quot;adam&quot;, &quot;male&quot;}, {&quot;vicky&quot;, &quot;female&quot;}, } tpl := template.Must(template.New(&quot;t1&quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.</div>
 
   <footer>
-    <a href="http://tech.mwq365.cn/web/blog-with-hugo/" title="使用hugo搭建博客系统">Read More…</a>
+    <a href="http://tech.mwq365.cn/go/template-basic/" title="GO语言模板【一】：基本用法">Read More…</a>
   </footer>
 </article>
 </li>

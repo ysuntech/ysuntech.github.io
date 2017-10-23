@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="http://tech.mwq365.cn/go/template-basic/">
+
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>GO语言模板【一】：基本用法 - 汇编吾信</title>
+    
+<meta name="description" content="介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。模板的基本用法 模板使用基本分为3个步骤: 声明模板 直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &amp;quot;female&amp;quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&amp;quot;adam&amp;quot;, &amp;quot;male&amp;quot;}, {&amp;quot;vicky&amp;quot;, &amp;quot;female&amp;quot;}, } tpl := template.Must(template.New(&amp;quot;t1&amp;quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.">
+
+<meta property="og:title" content="GO语言模板【一】：基本用法 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tech.mwq365.cn/go/template-basic/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。模板的基本用法 模板使用基本分为3个步骤: 声明模板 直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &amp;quot;female&amp;quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&amp;quot;adam&amp;quot;, &amp;quot;male&amp;quot;}, {&amp;quot;vicky&amp;quot;, &amp;quot;female&amp;quot;}, } tpl := template.Must(template.New(&amp;quot;t1&amp;quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="http://tech.mwq365.cn/go/template-basic/">
+<meta name="twitter:title" content="GO语言模板【一】：基本用法 - 汇编吾信">
+<meta name="twitter:description" content="介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。模板的基本用法 模板使用基本分为3个步骤: 声明模板 直接template.New(&amp;ldquo;模板名&amp;rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&amp;rdquo;执行&amp;rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &amp;quot;female&amp;quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&amp;quot;adam&amp;quot;, &amp;quot;male&amp;quot;}, {&amp;quot;vicky&amp;quot;, &amp;quot;female&amp;quot;}, } tpl := template.Must(template.New(&amp;quot;t1&amp;quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template.">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://tech.mwq365.cn/"
+    },
+    "headline": "GO语言模板【一】：基本用法 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://tech.mwq365.cn/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-23T10:49:28JST",
+    "dateModified": "2017-10-23T10:49:28JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://tech.mwq365.cn/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "介绍 使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。
+模板的基本用法 模板使用基本分为3个步骤:
+ 声明模板 直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。 解析|编译模板 解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。 给模板赋值，执行输出 执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。  下面看几个例子: 例1： 字符串模板
+func Test_Template() { const letter = `hello {{- .Name }}, you are a {{- if eq .Gender &quot;female&quot; }} girl {{else -}} boy {{- end }} ` users := []User{ {&quot;adam&quot;, &quot;male&quot;}, {&quot;vicky&quot;, &quot;female&quot;}, } tpl := template.Must(template.New(&quot;t1&quot;).Parse(letter)) for _, user := range users { tpl.Execute(os.Stdout, user) } }  template."
+  }
+</script>
+
+
+    <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
+    
+  </head>
+
+  <body>
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+          </div>
+
+          
+          <div id="navbar" class="collapse navbar-collapse">
+            
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              <li><a href="/data/">大数据</a></li>
+              
+              
+              
+              <li><a href="/db/">数据库</a></li>
+              
+              
+              
+              <li><a href="/go/">GO语言</a></li>
+              
+              
+              
+              <li><a href="/ops/">服务器运维</a></li>
+              
+              
+              
+              <li><a href="/spiders/">爬虫</a></li>
+              
+              
+              
+              <li><a href="/web/">WEB</a></li>
+              
+              
+            </ul>
+            
+          </div>
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/go/" itemprop="url"><span itemprop="title">go</span></a></li>
+        
+        <li class="active">GO语言模板【一】：基本用法</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T10:49:28JST">2017-10-23 10:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
+      
+    </ul>
+
+    <h1 class="title">GO语言模板【一】：基本用法</h1>
+  </header>
+
+  
+
+  <div class="article-body">
+
+<h2 id="介绍">介绍</h2>
+
+<p>使用GO编写CMS系统时，我们需要用到模板功能。GO标准库提供了两个库来支持模板功能: text/template, html/template。本文主要介绍模板的基本用法。</p>
+
+<h2 id="模板的基本用法">模板的基本用法</h2>
+
+<p>模板使用基本分为3个步骤:</p>
+
+<ol>
+<li>声明模板
+直接template.New(&ldquo;模板名&rdquo;) 就行,模板名是自定义的块名，不一定是文件名。在第三步&rdquo;执行&rdquo;阶段可能需要用到。</li>
+<li>解析|编译模板
+解析是指分析模板内容，编译处理。 模板内容可以是字符串，也可以存放在文件中。</li>
+<li>给模板赋值，执行输出
+执行是指将数据赋值给第二步编译好的模板，渲染输出。如果已经定义多个模板块，可以指定块名，只渲染相应的块。</li>
+</ol>
+
+<p>下面看几个例子:
+例1： 字符串模板</p>
+
+<pre><code class="language-GO">func Test_Template() {
+    const letter = `hello {{- .Name }}, you are a
+    {{- if  eq .Gender &quot;female&quot; }} girl 
+    {{else -}}    
+    boy 
+    {{- end }}
+    `
+
+    users := []User{
+        {&quot;adam&quot;, &quot;male&quot;},
+        {&quot;vicky&quot;, &quot;female&quot;},
+    }
+
+    tpl := template.Must(template.New(&quot;t1&quot;).Parse(letter))
+    for _, user := range users {
+        tpl.Execute(os.Stdout, user)
+    }
+}
+</code></pre>
+
+<p>template.Must主要用来简化错误处理，定义如下:</p>
+
+<pre><code class="language-GO">func Must(t *Template, err error) *Template {
+    if err != nil {
+        panic(err)
+    }
+    return t
+}
+</code></pre>
+
+<p>流程基本上就是New,Parse,Execute</p>
+
+<p>模板中的 &ldquo;-&rdquo; 可以trim掉空字符</p>
+
+<p>例2：模板函数</p>
+
+<p>有时模板自带的函数不能满足需求，可以将GO内置函数或自定义函数注册到模板，然后使用。</p>
+
+<pre><code>func Test_TemplateFunc() {
+    funcMap := template.FuncMap{
+        &quot;title&quot;: strings.Title,
+    }
+
+    code := `title: {{printf &quot;%q&quot; .}}
+output 0:{{title .}}
+output 1:{{title . | printf &quot;%q&quot;}}
+output 2:{{printf &quot;%q&quot; . | title}}
+    `
+
+    tpl := template.Must(template.New(&quot;titleTest&quot;).Funcs(funcMap).Parse(code))
+    tpl.Execute(os.Stdout, &quot;show me the money&quot;)
+}
+</code></pre>
+
+<p>定义函数Map: key为模板中的函数名，value为实际函数。 然后在模板Parse之前，调用template.Funcs(funcMap)。</p>
+
+<p>template.Funcs，以及Parse, Execute都可以执行多次。 只要保证 New, Funcs(可选), Parse, Execute这个顺序就OK。</p>
+
+<p>以上是模板的基本用法，接下来我们看下模板块复用的两种方式</p>
+
+<h2 id="模板块的复用">模板块的复用</h2>
+
+<ul>
+<li>第一种方式： Helper</li>
+</ul>
+
+<p>这种做法的思路是，先定义一些基础块，然后在主模板中，通过template函数，调用这些基础块。类似定义辅助函数的做法。</p>
+
+<p>来看看代码：</p>
+
+<pre><code class="language-Go">//定义模板数据结构
+type templateFile struct {
+    name     string //文件名
+    contents string //模板内容
+}
+
+//创建测试模板文件
+func createTestDir(files []templateFile) string {
+    dir, err := ioutil.TempDir(&quot;&quot;, &quot;template&quot;)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    for _, file := range files {
+        f, err := os.Create(filepath.Join(dir, file.name))
+        if err != nil {
+            log.Fatal(err)
+        }
+        defer f.Close()
+        _, err = io.WriteString(f, file.contents)
+        if err != nil {
+            log.Fatal(err)
+        }
+    }
+    return dir
+}
+
+// Helper方式复用模板块
+func Test_Helper() {
+    //定义t1,t2两个模板块，写入对应的文件
+    dir := createTestDir([]templateFile{
+        {&quot;t1.tmpl&quot;, `{{define &quot;t1&quot;}} this is T1\n{{end}}`},
+        {&quot;t2.tmpl&quot;, `{{define &quot;t2&quot;}} this is T2\n{{end}}`}, 
+    })
+
+    defer os.RemoveAll(dir)
+    
+    //读取t1, t2模板块的定义
+    pattern := filepath.Join(dir, &quot;*.tmpl&quot;)
+    templates := template.Must(template.ParseGlob(pattern))
+
+    //定义driver1模板快，使用了模板块t1
+    _, err := templates.Parse(`{{define &quot;driver1&quot;}}hello {{template &quot;t1&quot;}}{{end}}`)
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    //定义driver2模板快，使用了模板块t2
+    _, err = templates.Parse(`{{define &quot;driver2&quot;}}hi {{template &quot;t2&quot;}}{{end}}`)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    //执行和输出
+    templates.ExecuteTemplate(os.Stdout, &quot;driver1&quot;, nil)
+    templates.ExecuteTemplate(os.Stdout, &quot;driver2&quot;, nil)
+}
+</code></pre>
+
+<ul>
+<li>第二种方式: Clone共享</li>
+</ul>
+
+<p>共享方式有点像类的继承,将模板块看作类的方法。 在基础类中定义一些公共方法和虚函数。 子类Clone父类,然后实现虚函数，或者override之前定义的方法。</p>
+
+<p>来看代码：</p>
+
+<pre><code class="language-GO">func Test_Share() {
+    //准备公共块
+    dir := createTestDir([]templateFile{
+        {&quot;t0.tmpl&quot;, &quot;t0 (version {{.}})invokes t1:{{ template `t1` }}\n&quot;},
+        {&quot;t1.tmpl&quot;, &quot;{{define `t1`}}t1 invokes t2:{{ template `t2` }}{{end}}&quot;},
+    })
+    defer os.RemoveAll(dir)
+
+    //定义drivers基础模板。 没有指定模板名时，模板的名字是第一个文件名:t0.tmpl。
+    pattern := filepath.Join(dir, &quot;*.tmpl&quot;)
+    drivers := template.Must(template.ParseGlob(pattern))
+    //此时，基础模板中已经包含了 t0.tmpl块，t1块的定义，并且调用了t2块。但t2块还没有实现，类似虚函数。
+
+    //通过clone创建子模板tmp1
+    tmp1, err := drivers.Clone()
+    if err != nil {
+        log.Fatal(err)
+    }
+    //定义t2块
+    tmp1.Parse(&quot;{{define `t2`}}this is t2 version A{{end}}&quot;)
+    //输出
+    tmp1.ExecuteTemplate(os.Stdout, &quot;t0.tmpl&quot;, &quot;first&quot;)
+
+
+    //通过clone创建子模板tmp2
+    tmp2, err := drivers.Clone()
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    //这是t2块的另外一种实现
+    tmp2.Parse(`{{define &quot;t2&quot;}}this is t2 version B{{end}}`)
+    tmp2.ExecuteTemplate(os.Stdout, &quot;t0.tmpl&quot;, &quot;second&quot;)
+    
+    //tmp1和tmp2是两个子类，它们有不同的t2块定义，互不影响。
+}
+</code></pre>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF/">模板</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF" class="list-group-item">模板</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; 汇编吾信</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+   </script>
+    
+  </body>
+</html>
+
