@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://tech.mwq365.cn/ops/autossh/</loc>
+    <lastmod>2017-10-23T18:10:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://tech.mwq365.cn/go/graceful/</loc>
     <lastmod>2017-10-23T11:09:26+08:00</lastmod>
   </url>
@@ -52,6 +57,24 @@
   </url>
   
   <url>
+    <loc>http://tech.mwq365.cn/tags/nat/</loc>
+    <lastmod>2017-10-23T18:10:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://tech.mwq365.cn/ops/</loc>
+    <lastmod>2017-10-23T18:10:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://tech.mwq365.cn/tags/ssh/</loc>
+    <lastmod>2017-10-23T18:10:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://tech.mwq365.cn/tags/</loc>
     <lastmod>2017-10-21T23:00:00+08:00</lastmod>
     <priority>0</priority>
@@ -89,7 +112,7 @@
   
   <url>
     <loc>http://tech.mwq365.cn/</loc>
-    <lastmod>2017-10-23T11:09:26+08:00</lastmod>
+    <lastmod>2017-10-23T18:10:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="http://tech.mwq365.cn/ops/autossh/">
+
+
+    <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>使用autossh穿透NAT访问内网服务器 - 汇编吾信</title>
+    
+<meta name="description" content="&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&lt;p&gt;我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&amp;rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？&lt;/p&gt;&lt;p&gt;我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;">
+
+<meta property="og:title" content="使用autossh穿透NAT访问内网服务器 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tech.mwq365.cn/ops/autossh/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&lt;p&gt;我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&amp;rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？&lt;/p&gt;&lt;p&gt;我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="http://tech.mwq365.cn/ops/autossh/">
+<meta name="twitter:title" content="使用autossh穿透NAT访问内网服务器 - 汇编吾信">
+<meta name="twitter:description" content="&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&lt;p&gt;我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&amp;rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？&lt;/p&gt;&lt;p&gt;我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://tech.mwq365.cn/"
+    },
+    "headline": "使用autossh穿透NAT访问内网服务器 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://tech.mwq365.cn/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-23T18:10:00JST",
+    "dateModified": "2017-10-23T18:10:00JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://tech.mwq365.cn/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "<h2 id="简介">简介</h2>
+
+<p>我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？</p>
+
+<p>我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。</p>
+
+<p></p>"
+  }
+</script>
+
+
+    <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
+    
+  </head>
+
+  <body>
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+          </div>
+
+          
+          <div id="navbar" class="collapse navbar-collapse">
+            
+            <ul class="nav navbar-nav navbar-right">
+              
+              
+              <li><a href="/data/">大数据</a></li>
+              
+              
+              
+              <li><a href="/db/">数据库</a></li>
+              
+              
+              
+              <li><a href="/go/">GO语言</a></li>
+              
+              
+              
+              <li><a href="/ops/">服务器运维</a></li>
+              
+              
+              
+              <li><a href="/spiders/">爬虫</a></li>
+              
+              
+              
+              <li><a href="/web/">WEB</a></li>
+              
+              
+            </ul>
+            
+          </div>
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/ops/" itemprop="url"><span itemprop="title">ops</span></a></li>
+        
+        <li class="active">使用autossh穿透NAT访问内网服务器</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:10:00JST">2017-10-23 18:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/ops/">ops</a></li>
+      
+      <li>127 Words</li>
+      
+      
+    </ul>
+
+    <h1 class="title">使用autossh穿透NAT访问内网服务器</h1>
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="简介">简介</h2>
+
+<p>我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？</p>
+
+<p>我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。</p>
+
+<p></p>
+
+<h2 id="原理介绍">原理介绍</h2>
+
+<p>开工之前，先了解下相关理论知识。我们知道，TCP三次握手之后，建立了全双工连接。或者说连接是双向的。我们可以向服务器发消息，服务器也可以向客户端发消息。</p>
+
+<p>主要用到反向SSH隧道。 我们先从家庭主机连接到公网VPS主机, 建立起SSH永久隧道。 有了这条隧道，我们可以随时随地登录VPS,通过隧道访问家庭主机。下面是原理示意图：</p>
+
+<p><img src="/media/autossh.jpg" alt="autossh" /></p>
+
+<h2 id="安装配置">安装配置</h2>
+
+<p>接下来我们开始进入实操阶段(操作系统为：ubuntu 16.04 server版)</p>
+
+<ul>
+<li>在内网家庭主机上安装autossh
+<code>bash
+aptitude install autossh
+</code></li>
+
+<li><p>打通从家庭主机到vps主机的ssh无密码登录</p>
+
+<pre><code class="language-bash">ssh-keygen -t rsa
+scp ~/.ssh/id_rsa.pub adam@vps_host:/home/adam/.ssh/authorized_keys
+ssh vps_host
+</code></pre></li>
+
+<li><p>从家庭主机连接VPS，建立SSH隧道
+新建脚本： autossh.sh</p>
+
+<pre><code class="language-bash">#! /bin/bash
+/bin/su -c '/usr/bin/autossh -M 5676 -NR 8022:localhost:22 adam@vps_host ' - adam
+</code></pre>
+
+<p>其中5676是autossh管理端口, 8022是ssh隧道VPS端的端口号，22是本机的端口好。 adam@vps_host是vps账号</p></li>
+
+<li><p>启动脚本</p>
+
+<pre><code class="language-bash">nohup sh autossh.sh &gt; autossh.log 2&gt;&amp;1 &amp;
+</code></pre></li>
+</ul>
+
+<p>好了，隧道已经搭建完成，我们可以随时通过VPS服务器登录内网主机</p>
+
+<ul>
+<li>测试</li>
+</ul>
+
+<pre><code class="language-bash"># 登录VPS
+ssh adam@vps_host
+adam@adam00:~$ hostname
+adam00.aliyun
+
+# 在VPS上进入隧道
+adam@adam00:~$ ssh localhost -p 8022
+adam@localhost's password: 
+Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-97-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+Last login: Mon Oct 23 17:17:03 2017 from ::1
+# 成功登录内网家庭主机
+adam@adam00garden:~$ hostname
+adam00garden
+</code></pre>
+
+<h2 id="问题">问题</h2>
+
+<p>服务搭建完后，第二天上公司连ssh隧道，长时间没响应。 用&rdquo;ss -ant |grep 8022&rdquo;看端口还在。诡异的是有一堆&rdquo;CLOSE_WAIT&rdquo;状态的连接。</p>
+
+<p>CLOSE_WAIT状态说明客户端(也就是家庭内网主机)已经断开，但服务端(也就是VPS服务器)依然依然保持连接， 连接处于半关闭状态。</p>
+
+<p>知道原因就好办了，上网搜索下，修改VPS sshd配置设置 ClientAliveInterval 即可。</p>
+
+<h2 id="参考资料">参考资料</h2>
+
+<ul>
+<li>autossh does not kill ssh when link down
+<a href="https://serverfault.com/questions/626461/autossh-does-not-kill-ssh-when-link-down">https://serverfault.com/questions/626461/autossh-does-not-kill-ssh-when-link-down</a></li>
+</ul></div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://tech.mwq365.cn/tags/nat/">NAT</a></li>
+          
+          <li><a href="http://tech.mwq365.cn/tags/ssh/">SSH</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/nat" class="list-group-item">nat</a>
+      
+      <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%B9%B3%E6%BB%91%E9%87%8D%E5%90%AF" class="list-group-item">平滑重启</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF" class="list-group-item">模板</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p>&copy;汇编吾信 2017</p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>. Theme <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+  </body>
+</html>
+

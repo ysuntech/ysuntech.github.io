@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nat on 汇编吾信</title>
+    <link>http://tech.mwq365.cn/tags/nat/</link>
+    <description>Recent content in Nat on 汇编吾信</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>&amp;copy;汇编吾信 2017</copyright>
+    <lastBuildDate>Mon, 23 Oct 2017 18:10:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://tech.mwq365.cn/tags/nat/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>使用autossh穿透NAT访问内网服务器</title>
+      <link>http://tech.mwq365.cn/ops/autossh/</link>
+      <pubDate>Mon, 23 Oct 2017 18:10:00 +0800</pubDate>
+      
+      <guid>http://tech.mwq365.cn/ops/autossh/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;
+
+&lt;p&gt;我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&amp;rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？&lt;/p&gt;
+
+&lt;p&gt;我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

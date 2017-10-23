@@ -6,6 +6,7 @@
     <description>Recent content in Tags on 汇编吾信</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
+    <copyright>&amp;copy;汇编吾信 2017</copyright>
     <lastBuildDate>Sat, 21 Oct 2017 23:00:00 +0800</lastBuildDate>
     
 	<atom:link href="http://tech.mwq365.cn/tags/index.xml" rel="self" type="application/rss+xml" />
@@ -26,6 +27,24 @@
       <pubDate>Fri, 20 Oct 2017 17:43:56 +0800</pubDate>
       
       <guid>http://tech.mwq365.cn/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nat</title>
+      <link>http://tech.mwq365.cn/tags/nat/</link>
+      <pubDate>Mon, 23 Oct 2017 18:10:00 +0800</pubDate>
+      
+      <guid>http://tech.mwq365.cn/tags/nat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ssh</title>
+      <link>http://tech.mwq365.cn/tags/ssh/</link>
+      <pubDate>Mon, 23 Oct 2017 18:10:00 +0800</pubDate>
+      
+      <guid>http://tech.mwq365.cn/tags/ssh/</guid>
       <description></description>
     </item>
     

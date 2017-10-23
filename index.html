@@ -85,6 +85,34 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:10:00JST">2017-10-23 18:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/ops/">ops</a></li>
+      
+      <li>127 Words</li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="http://tech.mwq365.cn/ops/autossh/">使用autossh穿透NAT访问内网服务器</a></h2>
+  </header>
+
+  
+  <div class="summary"><h2 id="简介">简介</h2>
+
+<p>我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？</p>
+
+<p>我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。</p>
+
+<p></p></div>
+
+  <footer>
+    <a href="http://tech.mwq365.cn/ops/autossh/" title="使用autossh穿透NAT访问内网服务器">Read More…</a>
+  </footer>
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T11:09:26JST">2017-10-23 11:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
@@ -288,6 +316,10 @@ hugo new site hugo_blog
       
       <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
       
+      <a href="http://tech.mwq365.cn/tags/nat" class="list-group-item">nat</a>
+      
+      <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
+      
       <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
       
       <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
@@ -311,10 +343,9 @@ hugo new site hugo_blog
 
     <footer class="l-footer">
       <div class="container">
-        <p><span class="h-logo">&copy; 汇编吾信</span></p>
+        <p>&copy;汇编吾信 2017</p>
         <aside>
-          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
-          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>. Theme <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
         </aside>
       </div>
     </footer>
