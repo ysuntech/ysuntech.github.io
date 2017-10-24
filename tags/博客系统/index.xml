@@ -36,8 +36,7 @@
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd ~
 # 创建名为hugo_blog的博客站点
 hugo new site hugo_blog
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

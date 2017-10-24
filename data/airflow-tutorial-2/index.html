@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
+
+<head>
+  <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.30.2" />
@@ -11,11 +12,11 @@
 <link rel="canonical" href="http://tech.mwq365.cn/data/airflow-tutorial-2/">
 
 
-    <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信</title>
-    
+  <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+  <title>Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信</title>
+  
 <meta name="description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;这是Airflow调度系统系列文章中的第二篇，主要介绍airflow调度系统的分布式设置和一些常见问题。在大数据统计工作中，我们有一系列的程序任务需要运行。这些任务运行时间长，任务之间往往存在依赖关系，再加上任务运行的系统环境稳定性较差，导致数据结果要么不能按时生成，要么生成的数据结果不正确。而且每次出现故障后，手动修复数据的效率低下。&lt;/p&gt;&lt;p&gt;直到引入Airflow调度系统，这些问题都得到了较好的解决。Airflow对任务之间的依赖关系支持非常好。分布式部署更能提高任务处理效率和系统可用性。&lt;/p&gt;">
 
 <meta property="og:title" content="Airflow调度系统教程【二】:分布式和常见问题 - 汇编吾信">
@@ -76,65 +77,64 @@
 </script>
 
 
-    <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
-    
-  </head>
+  <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
+</head>
 
-  <body>
-    <header class="l-header">
-      <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
-          </div>
-
-          
-          <div id="navbar" class="collapse navbar-collapse">
-            
-            <ul class="nav navbar-nav navbar-right">
-              
-              
-              <li><a href="/data/">大数据</a></li>
-              
-              
-              
-              <li><a href="/db/">数据库</a></li>
-              
-              
-              
-              <li><a href="/go/">GO语言</a></li>
-              
-              
-              
-              <li><a href="/ops/">服务器运维</a></li>
-              
-              
-              
-              <li><a href="/spiders/">爬虫</a></li>
-              
-              
-              
-              <li><a href="/web/">WEB</a></li>
-              
-              
-            </ul>
-            
-          </div>
-          
-
-        </div>
-      </nav>
-    </header>
-
-    <main>
+<body>
+  <header class="l-header">
+    <nav class="navbar navbar-default">
       <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+        </div>
+
         
+        <div id="navbar" class="collapse navbar-collapse">
+          
+          <ul class="nav navbar-nav navbar-right">
+             
+            <li>
+              <a href="/data/">大数据</a>
+            </li>
+              
+            <li>
+              <a href="/db/">数据库</a>
+            </li>
+              
+            <li>
+              <a href="/go/">GO语言</a>
+            </li>
+              
+            <li>
+              <a href="/ops/">服务器运维</a>
+            </li>
+              
+            <li>
+              <a href="/spiders/">爬虫</a>
+            </li>
+              
+            <li>
+              <a href="/web/">WEB</a>
+            </li>
+             
+          </ul>
+          
+        </div>
+        
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      
 <div class="row">
   <div class="col-md-8">
 
@@ -153,9 +153,6 @@
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-21T23:00:00JST">2017-10-21 23:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
-      
-      <li>40 Words</li>
-      
       
     </ul>
 
@@ -291,24 +288,39 @@
   </div>
 </div>
 
-      </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="l-footer">
-      <div class="container">
-        <p>&copy;汇编吾信 2017</p>
-        <aside>
-          <p>Powered by <a href="https://gohugo.io/">Hugo</a>. Theme <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
-        </aside>
-      </div>
-    </footer>
+  <footer class="l-footer">
+    <div class="container">
+      <p>&copy;汇编吾信 2017</p>
+      <aside>
+        <p>Powered by
+          <a href="https://gohugo.io/">Hugo</a>. Theme
+          <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by
+          <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+      </aside>
+    </div>
+  </footer>
 
-    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    
-  </body>
+  <script>
+    var _hmt = _hmt || [];
+    var devHostnames = ["localhost"]
+      (function () {
+        if (devHostnames.indexOf(location.hostname) !== -1) {
+          return
+        }
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+</body>
+
 </html>
-

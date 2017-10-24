@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
+
+<head>
+  <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.30.2" />
@@ -11,11 +12,11 @@
 <link rel="canonical" href="http://tech.mwq365.cn/go/graceful/">
 
 
-    <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
-    <title>GO语言平滑重启 - 汇编吾信</title>
-    
+  <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+  <title>GO语言平滑重启 - 汇编吾信</title>
+  
 <meta name="description" content="&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&lt;p&gt;Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。&lt;/p&gt;&lt;p&gt;在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 &lt;em&gt;不中断服务&lt;/em&gt; 用户无感知 ，也就是&amp;rdquo;&lt;em&gt;平滑重启&lt;/em&gt;&amp;ldquo;？&lt;/p&gt;&lt;h2 id=&#34;整体思路&#34;&gt;整体思路&lt;/h2&gt;&lt;p&gt;新版本文件就绪后，从命令行发送信号 &amp;mdash;&amp;gt; 老的进程fork出子进程，exec新版程序 &amp;mdash;&amp;gt; 子进程从原有listener socket获取连接，处理新请求 &amp;mdash;&amp;gt; 父进程停止接受新连接， 处理完所有已获取的请求 &amp;mdash;&amp;gt; 父进程退出 &amp;mdash;&amp;gt; 重启完成&lt;/p&gt;">
 
 <meta property="og:title" content="GO语言平滑重启 - 汇编吾信">
@@ -79,65 +80,64 @@
 </script>
 
 
-    <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet">
-    
-  </head>
+  <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
+</head>
 
-  <body>
-    <header class="l-header">
-      <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
-          </div>
-
-          
-          <div id="navbar" class="collapse navbar-collapse">
-            
-            <ul class="nav navbar-nav navbar-right">
-              
-              
-              <li><a href="/data/">大数据</a></li>
-              
-              
-              
-              <li><a href="/db/">数据库</a></li>
-              
-              
-              
-              <li><a href="/go/">GO语言</a></li>
-              
-              
-              
-              <li><a href="/ops/">服务器运维</a></li>
-              
-              
-              
-              <li><a href="/spiders/">爬虫</a></li>
-              
-              
-              
-              <li><a href="/web/">WEB</a></li>
-              
-              
-            </ul>
-            
-          </div>
-          
-
-        </div>
-      </nav>
-    </header>
-
-    <main>
+<body>
+  <header class="l-header">
+    <nav class="navbar navbar-default">
       <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+        </div>
+
         
+        <div id="navbar" class="collapse navbar-collapse">
+          
+          <ul class="nav navbar-nav navbar-right">
+             
+            <li>
+              <a href="/data/">大数据</a>
+            </li>
+              
+            <li>
+              <a href="/db/">数据库</a>
+            </li>
+              
+            <li>
+              <a href="/go/">GO语言</a>
+            </li>
+              
+            <li>
+              <a href="/ops/">服务器运维</a>
+            </li>
+              
+            <li>
+              <a href="/spiders/">爬虫</a>
+            </li>
+              
+            <li>
+              <a href="/web/">WEB</a>
+            </li>
+             
+          </ul>
+          
+        </div>
+        
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      
 <div class="row">
   <div class="col-md-8">
 
@@ -156,9 +156,6 @@
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T11:09:26JST">2017-10-23 11:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
-      
-      <li>93 Words</li>
-      
       
     </ul>
 
@@ -312,24 +309,39 @@
   </div>
 </div>
 
-      </div>
-    </main>
+    </div>
+  </main>
 
-    <footer class="l-footer">
-      <div class="container">
-        <p>&copy;汇编吾信 2017</p>
-        <aside>
-          <p>Powered by <a href="https://gohugo.io/">Hugo</a>. Theme <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
-        </aside>
-      </div>
-    </footer>
+  <footer class="l-footer">
+    <div class="container">
+      <p>&copy;汇编吾信 2017</p>
+      <aside>
+        <p>Powered by
+          <a href="https://gohugo.io/">Hugo</a>. Theme
+          <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by
+          <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+      </aside>
+    </div>
+  </footer>
 
-    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+  <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
-    
-  </body>
+  <script>
+    var _hmt = _hmt || [];
+    var devHostnames = ["localhost"]
+      (function () {
+        if (devHostnames.indexOf(location.hostname) !== -1) {
+          return
+        }
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+</body>
+
 </html>
-
