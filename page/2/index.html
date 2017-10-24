@@ -7,15 +7,15 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.30.2" />
 
-<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/tags/nat/index.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/index.xml">
 
-<link rel="canonical" href="http://tech.mwq365.cn/tags/nat/">
+<link rel="canonical" href="http://tech.mwq365.cn/">
 
 
   <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
-  <title>Nat - 汇编吾信</title>
+  <title>汇编吾信</title>
   
   <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
 </head>
@@ -79,34 +79,81 @@
   <div class="col-md-8">
 
     
-    <header class="page-header">
-      <h1>Nat</h1>
-    </header>
-    
 
     <ul class="p-articles">
       
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-24T11:12:54JST">2017-10-24 11:00</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/ops/">ops</a></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:59:33JST">2017-10-23 18:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/web/">web</a></li>
       
     </ul>
-    <h2 class="title"><a href="http://tech.mwq365.cn/ops/autossh/">使用autossh穿透NAT访问内网服务器</a></h2>
+    <h2 class="title"><a href="http://tech.mwq365.cn/web/blog-with-hugo/">使用hugo搭建博客系统</a></h2>
   </header>
 
   
-  <div class="summary"><h2 id="简介">简介</h2>
+  <div class="summary"><h2 id="介绍">介绍</h2>
 
-<p>我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？</p>
+<p>作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。</p>
 
-<p>我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。</p>
+<h2 id="搭建博客">搭建博客</h2>
+
+<p>让我们开始吧,按步骤来：</p>
+
+<ol>
+<li><p>下载hugo软件，图省事可以直接下载二进制版本</p></li>
+
+<li><p>将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo</p></li>
+
+<li><p>初始化博客项目</p>
+
+<pre><code class="language-bash">cd ~
+# 创建名为hugo_blog的博客站点
+hugo new site hugo_blog
+</code></pre>
 
 <p></p></div>
 
   <footer>
-    <a href="http://tech.mwq365.cn/ops/autossh/" title="使用autossh穿透NAT访问内网服务器">Read More…</a>
+    <a href="http://tech.mwq365.cn/web/blog-with-hugo/" title="使用hugo搭建博客系统">Read More…</a>
+  </footer>
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T13:57:37JST">2017-10-23 13:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
+      
+    </ul>
+    <h2 class="title"><a href="http://tech.mwq365.cn/data/airflow-tutorial-1/">Airflow调度系统教程【一】:安装</a></h2>
+  </header>
+
+  
+  <div class="summary"><h2 id="介绍">介绍</h2>
+
+<p>Airflow是一套开源任务调度系统，可以完善地处理任务之间的依赖关系，界面美观，操作方便，可扩展性较强。</p>
+
+<p>这是Airflow调度系统系列文章中的第一篇，主要介绍环境搭建,插件安装和简单设置。</p>
+
+<h2 id="特点">特点</h2>
+
+<ul>
+<li>Airflow是一个通用型任务调度系统，使用Python编写</li>
+<li>任务调度使用Python代码定义，比较灵活；</li>
+<li>支持任务间的依赖关系；</li>
+<li>支持多种调度策略，包括分布式调度(通过Celery实现)；</li>
+<li>自带较为美观的Web UI，操作方便。</li>
+<li>自带日志查看，任务监控等常见功能；</li>
+<li>注意：不能替代crontab，管理数据分析任务脚本以及其它cron任务。</li>
+</ul>
+
+<p></p></div>
+
+  <footer>
+    <a href="http://tech.mwq365.cn/data/airflow-tutorial-1/" title="Airflow调度系统教程【一】:安装">Read More…</a>
   </footer>
 </article>
 </li>
@@ -114,6 +161,69 @@
     </ul>
 
     
+<nav>
+  <ul class="pager">
+
+    
+
+    
+
+<ul class="pagination">
+    
+    <li>
+        <a href="/" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    </li>
+    
+    <li
+    >
+    <a href="/" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li
+    ><a href="/">1</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li
+    class="active"><a href="/page/2/">2</a></li>
+    
+    
+    <li
+    class="disabled">
+    <a href="" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    
+    <li>
+        <a href="/page/2/" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    </li>
+    
+</ul>
+
+    
+    
+    
+
+    
+
+  </ul>
+</nav>
+
 
 
   </div>

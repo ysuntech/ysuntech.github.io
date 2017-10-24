@@ -51,7 +51,7 @@
       "width": 800
     },
     "datePublished": "2017-10-23T18:10:00JST",
-    "dateModified": "2017-10-23T18:55:33JST",
+    "dateModified": "2017-10-24T11:12:54JST",
     "author": {
       "@type": "Person",
       "name": "汇编吾信"
@@ -151,7 +151,7 @@
     <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:55:33JST">2017-10-23 18:00</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-24T11:12:54JST">2017-10-24 11:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/ops/">ops</a></li>
       
     </ul>
@@ -171,7 +171,7 @@
 
 <h2 id="原理介绍">原理介绍</h2>
 
-<p>开工之前，先了解下相关理论知识。我们知道，TCP三次握手之后，建立了全双工连接。或者说连接是双向的。我们可以向服务器发消息，服务器也可以向客户端发消息。</p>
+<p>开工之前，先了解下相关理论知识。我们知道，TCP三次握手之后，建立了全双工连接。或者说连接是双向的。我们可以向服务器发消息，服务器也可以向客户端发送消息。</p>
 
 <p>主要用到反向SSH隧道。 我们先从家庭主机连接到公网VPS主机, 建立起SSH永久隧道。 有了这条隧道，我们可以随时随地登录VPS,通过隧道访问家庭主机。下面是原理示意图：</p>
 
@@ -348,7 +348,7 @@ adam00garden
 
   <script>
     var _hmt = _hmt || [];
-    var devHostnames = ["localhost"];
+    var devHostnames = ["localhost",'127.0.0.1'];
     (function () {
       if (devHostnames.indexOf(location.hostname) !== -1) {
         return

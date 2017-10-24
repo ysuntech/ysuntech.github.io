@@ -289,4 +289,6 @@ article.li.sm>header {
   color: #263238;
 }
 
-
+.pagination li a{
+  margin: 5px;
+}
