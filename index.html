@@ -85,7 +85,34 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:10:00JST">2017-10-23 18:00</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:55:33JST">2017-10-23 18:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/db/">db</a></li>
+      
+    </ul>
+    <h2 class="title"><a href="http://tech.mwq365.cn/db/mongo-aggregation/">MongoDB聚合操作实战</a></h2>
+  </header>
+
+  
+  <div class="summary"><h2 id="介绍">介绍</h2>
+
+<p>MongoDB使用起来不需要事先建表，可随时增加字段， 扩容比较方便。在数据量大，可靠性要求没那么苛刻时，我们会考虑MongoDB作为数据存储方案。</p>
+
+<p>例如，在游戏平台业务中： 存储游戏内用户的注册记录。collection名:app_user_reg, 字段包括 uid(用户ID), time(游戏内注册时间), appkey(游戏标识), channel(注册渠道)。</p>
+
+<p>一个用户可注册多个游戏。有这样一个需求: 批量查询每个用户的首次注册信息。如果使用窗口函数，查询比较简单。但MongoDB目前暂无窗口函数支持。 在经过资料查询和实验操作后，最终使用聚合操作实现需求。</p>
+
+<p></p></div>
+
+  <footer>
+    <a href="http://tech.mwq365.cn/db/mongo-aggregation/" title="MongoDB聚合操作实战">Read More…</a>
+  </footer>
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:55:33JST">2017-10-23 18:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/ops/">ops</a></li>
       
     </ul>
@@ -110,7 +137,7 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T11:09:26JST">2017-10-23 11:00</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T13:57:37JST">2017-10-23 13:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
     </ul>
@@ -138,7 +165,7 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T10:49:28JST">2017-10-23 10:00</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T13:57:37JST">2017-10-23 13:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
       
     </ul>
@@ -174,7 +201,7 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-21T23:00:00JST">2017-10-21 23:00</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T13:57:37JST">2017-10-23 13:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
     </ul>
@@ -199,7 +226,7 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T20:43:56JST">2017-10-20 20:00</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:59:33JST">2017-10-23 18:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/web/">web</a></li>
       
     </ul>
@@ -238,7 +265,7 @@ hugo new site hugo_blog
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-20T13:40:18JST">2017-10-20 13:00</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T13:57:37JST">2017-10-23 13:00</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
     </ul>
@@ -295,7 +322,11 @@ hugo new site hugo_blog
       
       <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
       
+      <a href="http://tech.mwq365.cn/tags/aggregation" class="list-group-item">aggregation</a>
+      
       <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/mongodb" class="list-group-item">mongodb</a>
       
       <a href="http://tech.mwq365.cn/tags/nat" class="list-group-item">nat</a>
       
@@ -306,8 +337,6 @@ hugo new site hugo_blog
       <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
       
       <a href="http://tech.mwq365.cn/tags/%E5%B9%B3%E6%BB%91%E9%87%8D%E5%90%AF" class="list-group-item">平滑重启</a>
-      
-      <a href="http://tech.mwq365.cn/tags/%E6%A8%A1%E6%9D%BF" class="list-group-item">模板</a>
       
     </div>
   </section>

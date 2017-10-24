@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Db on 汇编吾信</title>
+    <link>http://tech.mwq365.cn/db/</link>
+    <description>Recent content in Db on 汇编吾信</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>&amp;copy;汇编吾信 2017</copyright>
+    <lastBuildDate>Tue, 24 Oct 2017 14:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://tech.mwq365.cn/db/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MongoDB聚合操作实战</title>
+      <link>http://tech.mwq365.cn/db/mongo-aggregation/</link>
+      <pubDate>Tue, 24 Oct 2017 14:00:00 +0800</pubDate>
+      
+      <guid>http://tech.mwq365.cn/db/mongo-aggregation/</guid>
+      <description>&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
+
+&lt;p&gt;MongoDB使用起来不需要事先建表，可随时增加字段， 扩容比较方便。在数据量大，可靠性要求没那么苛刻时，我们会考虑MongoDB作为数据存储方案。&lt;/p&gt;
+
+&lt;p&gt;例如，在游戏平台业务中： 存储游戏内用户的注册记录。collection名:app_user_reg, 字段包括 uid(用户ID), time(游戏内注册时间), appkey(游戏标识), channel(注册渠道)。&lt;/p&gt;
+
+&lt;p&gt;一个用户可注册多个游戏。有这样一个需求: 批量查询每个用户的首次注册信息。如果使用窗口函数，查询比较简单。但MongoDB目前暂无窗口函数支持。 在经过资料查询和实验操作后，最终使用聚合操作实现需求。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

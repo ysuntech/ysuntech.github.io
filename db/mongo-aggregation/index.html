@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="http://tech.mwq365.cn/db/mongo-aggregation/">
+
+
+  <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+  <title>MongoDB聚合操作实战 - 汇编吾信</title>
+  
+<meta name="description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;MongoDB使用起来不需要事先建表，可随时增加字段， 扩容比较方便。在数据量大，可靠性要求没那么苛刻时，我们会考虑MongoDB作为数据存储方案。&lt;/p&gt;&lt;p&gt;例如，在游戏平台业务中： 存储游戏内用户的注册记录。collection名:app_user_reg, 字段包括 uid(用户ID), time(游戏内注册时间), appkey(游戏标识), channel(注册渠道)。&lt;/p&gt;&lt;p&gt;一个用户可注册多个游戏。有这样一个需求: 批量查询每个用户的首次注册信息。如果使用窗口函数，查询比较简单。但MongoDB目前暂无窗口函数支持。 在经过资料查询和实验操作后，最终使用聚合操作实现需求。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;">
+
+<meta property="og:title" content="MongoDB聚合操作实战 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tech.mwq365.cn/db/mongo-aggregation/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;MongoDB使用起来不需要事先建表，可随时增加字段， 扩容比较方便。在数据量大，可靠性要求没那么苛刻时，我们会考虑MongoDB作为数据存储方案。&lt;/p&gt;&lt;p&gt;例如，在游戏平台业务中： 存储游戏内用户的注册记录。collection名:app_user_reg, 字段包括 uid(用户ID), time(游戏内注册时间), appkey(游戏标识), channel(注册渠道)。&lt;/p&gt;&lt;p&gt;一个用户可注册多个游戏。有这样一个需求: 批量查询每个用户的首次注册信息。如果使用窗口函数，查询比较简单。但MongoDB目前暂无窗口函数支持。 在经过资料查询和实验操作后，最终使用聚合操作实现需求。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="http://tech.mwq365.cn/db/mongo-aggregation/">
+<meta name="twitter:title" content="MongoDB聚合操作实战 - 汇编吾信">
+<meta name="twitter:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;MongoDB使用起来不需要事先建表，可随时增加字段， 扩容比较方便。在数据量大，可靠性要求没那么苛刻时，我们会考虑MongoDB作为数据存储方案。&lt;/p&gt;&lt;p&gt;例如，在游戏平台业务中： 存储游戏内用户的注册记录。collection名:app_user_reg, 字段包括 uid(用户ID), time(游戏内注册时间), appkey(游戏标识), channel(注册渠道)。&lt;/p&gt;&lt;p&gt;一个用户可注册多个游戏。有这样一个需求: 批量查询每个用户的首次注册信息。如果使用窗口函数，查询比较简单。但MongoDB目前暂无窗口函数支持。 在经过资料查询和实验操作后，最终使用聚合操作实现需求。&lt;/p&gt;&lt;p&gt;&lt;/p&gt;">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://tech.mwq365.cn/"
+    },
+    "headline": "MongoDB聚合操作实战 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://tech.mwq365.cn/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-24T14:00:00JST",
+    "dateModified": "2017-10-23T18:55:33JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://tech.mwq365.cn/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "<h2 id="介绍">介绍</h2>
+
+<p>MongoDB使用起来不需要事先建表，可随时增加字段， 扩容比较方便。在数据量大，可靠性要求没那么苛刻时，我们会考虑MongoDB作为数据存储方案。</p>
+
+<p>例如，在游戏平台业务中： 存储游戏内用户的注册记录。collection名:app_user_reg, 字段包括 uid(用户ID), time(游戏内注册时间), appkey(游戏标识), channel(注册渠道)。</p>
+
+<p>一个用户可注册多个游戏。有这样一个需求: 批量查询每个用户的首次注册信息。如果使用窗口函数，查询比较简单。但MongoDB目前暂无窗口函数支持。 在经过资料查询和实验操作后，最终使用聚合操作实现需求。</p>
+
+<p></p>"
+  }
+</script>
+
+
+  <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+  <header class="l-header">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+        </div>
+
+        
+        <div id="navbar" class="collapse navbar-collapse">
+          
+          <ul class="nav navbar-nav navbar-right">
+             
+            <li>
+              <a href="/data/">大数据</a>
+            </li>
+              
+            <li>
+              <a href="/db/">数据库</a>
+            </li>
+              
+            <li>
+              <a href="/go/">GO语言</a>
+            </li>
+              
+            <li>
+              <a href="/ops/">服务器运维</a>
+            </li>
+              
+            <li>
+              <a href="/spiders/">爬虫</a>
+            </li>
+              
+            <li>
+              <a href="/web/">WEB</a>
+            </li>
+             
+          </ul>
+          
+        </div>
+        
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/db/" itemprop="url"><span itemprop="title">db</span></a></li>
+        
+        <li class="active">MongoDB聚合操作实战</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T18:55:33JST">2017-10-23 18:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/db/">db</a></li>
+      
+      <li>508ccc0</li>
+    </ul>
+
+    <h1 class="title">MongoDB聚合操作实战</h1>
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="介绍">介绍</h2>
+
+<p>MongoDB使用起来不需要事先建表，可随时增加字段， 扩容比较方便。在数据量大，可靠性要求没那么苛刻时，我们会考虑MongoDB作为数据存储方案。</p>
+
+<p>例如，在游戏平台业务中： 存储游戏内用户的注册记录。collection名:app_user_reg, 字段包括 uid(用户ID), time(游戏内注册时间), appkey(游戏标识), channel(注册渠道)。</p>
+
+<p>一个用户可注册多个游戏。有这样一个需求: 批量查询每个用户的首次注册信息。如果使用窗口函数，查询比较简单。但MongoDB目前暂无窗口函数支持。 在经过资料查询和实验操作后，最终使用聚合操作实现需求。</p>
+
+<p></p>
+
+<h2 id="相关知识">相关知识</h2>
+
+<p>在MongoDB里，有两种方式实现聚合: Pipeline和MapReduce。 Pipeline相对简单，一般情况下也能满足业务需求。所以本篇我们主要了解Pipeline。</p>
+
+<p>聚合调用方式为：db.collection.aggregate()。 参数为pipeline操作数组。</p>
+
+<p>目前支持的pipeline操作有：</p>
+
+<ul>
+<li>$project：修改输入文档的结构。可以用来重命名、增加或删除域，也可以用于创建计算结果以及嵌套文档。</li>
+<li>$match：用于过滤数据，只输出符合条件的文档。$match使用MongoDB的标准查询操作。</li>
+<li>$limit：用来限制MongoDB聚合管道返回的文档数。</li>
+<li>$skip：在聚合管道中跳过指定数量的文档，并返回余下的文档。</li>
+<li>$unwind：将文档中的某一个数组类型字段拆分成多条，每条包含数组中的一个值。</li>
+<li>$group：将集合中的文档分组，可用于统计结果。</li>
+<li>$sort：将输入文档排序后输出。</li>
+<li>$geoNear：输出接近某一地理位置的有序文档。</li>
+</ul>
+
+<h2 id="实战">实战</h2>
+
+<p>回到文章开头提出的问题，我们如何批量查询每个用户的首次注册信息？
+首先推荐一款免费MongoDB查询工具: Robo 3T。</p>
+
+<ul>
+<li>先插入测试数据</li>
+</ul>
+
+<p>在MongoDB shell里执行</p>
+
+<pre><code class="language-javascript">
+//生成随机整数
+function randInt(begin, end) {
+    return begin + Math.floor(Math.random() * (end - begin))
+}
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i &gt; 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+}
+
+
+//游戏appkey列表
+appkeys = ['appkey1', 'appkey2', 'appkey3', 'appkey4', 'appkey5', 'appkey5', 'appkey6']
+//用户注册时间戳列表
+timestamps = [1451577600, 1454256000, 1486051200, 1496419200, 1496851200]
+//注册渠道列表
+channels = ['ch_111', 'ch_123', 'ch_9812', 'ch_552', 'ch_888']
+
+//随机插入用户注册信息，每条用户可注册多款游戏
+for (i = 1; i &lt; 10001; i++) {
+    n = randInt(1, 10)
+    shuffle(appkeys)
+    userAppKeys = appkeys.slice(0,n)
+    for (j = 0; j &lt; n; j++) {
+        uid = i;
+        appkey = userAppKeys[j]
+        time = timestamps[randInt(0, timestamps.length)]
+        channel = channels[randInt(0, channels.length)]
+        db.app_user_reg.insert(
+            { &quot;uid&quot;: uid, &quot;appkey&quot;: appkey, &quot;time&quot;: time, &quot;channel&quot;: channel }
+        );
+    }
+}
+</code></pre>
+
+<ul>
+<li>确认数据已插入</li>
+</ul>
+
+<pre><code class="language-js">db.getCollection('app_user_reg').find({}).count()
+//50245
+
+db.getCollection('app_user_reg').find({uid:8})
+/*
+{
+    &quot;_id&quot; : ObjectId(&quot;59eee30472909ab1de65a3ba&quot;),
+    &quot;uid&quot; : 8.0,
+    &quot;appkey&quot; : &quot;appkey1&quot;,
+    &quot;time&quot; : 1486051200.0,
+    &quot;channel&quot; : &quot;ch_123&quot;
+},
+{
+    &quot;_id&quot; : ObjectId(&quot;59eee30472909ab1de65a3bb&quot;),
+    &quot;uid&quot; : 8.0,
+    &quot;appkey&quot; : &quot;appkey3&quot;,
+    &quot;time&quot; : 1496419200.0,
+    &quot;channel&quot; : &quot;ch_552&quot;
+},
+{
+    &quot;_id&quot; : ObjectId(&quot;59eee30472909ab1de65a3bc&quot;),
+    &quot;uid&quot; : 8.0,
+    &quot;appkey&quot; : &quot;appkey5&quot;,
+    &quot;time&quot; : 1451577600.0,
+    &quot;channel&quot; : &quot;ch_888&quot;
+}
+*/
+</code></pre>
+
+<ul>
+<li>查找uid=8,100,222的三位用户的首次注册记录</li>
+</ul>
+
+<pre><code class="language-js">db.getCollection('app_user_reg').aggregate(
+    [
+        { '$match': { 'uid': { '$in': [8, 100, 222] } } },
+        { '$sort': { 'time': 1 } },
+        {
+            '$group': {
+                '_id': '$uid',
+                'appkey': { '$first': '$appkey' },
+                'time': { '$first': '$time' },
+                'channel': { '$first': '$channel' }
+            }
+        }
+    ]
+)
+//查询结果:
+/*
+{
+    &quot;_id&quot; : 8.0,
+    &quot;appkey&quot; : &quot;appkey5&quot;,
+    &quot;time&quot; : 1451577600.0,
+    &quot;channel&quot; : &quot;ch_888&quot;
+},
+{
+    &quot;_id&quot; : 100.0,
+    &quot;appkey&quot; : &quot;appkey1&quot;,
+    &quot;time&quot; : 1451577600.0,
+    &quot;channel&quot; : &quot;ch_552&quot;
+},
+{
+    &quot;_id&quot; : 222.0,
+    &quot;appkey&quot; : &quot;appkey2&quot;,
+    &quot;time&quot; : 1451577600.0,
+    &quot;channel&quot; : &quot;ch_888&quot;
+}
+*/
+</code></pre>
+
+<p>可以看到 _id==8的记录，确实返回了首次登录数据</p>
+
+<p>上述查询，传入了一组管道操作作为参数。管道分三步:</p>
+
+<p>第一步：根据uid过滤出符合条件的游戏注册记录,每个用户可能玩多个游戏，需要选出首次注册的游戏。</p>
+
+<p>第二步：按时间排序，最早的游戏排最前。</p>
+
+<p>第三步：按uid分组，每个用户取第一条记录。</p></div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://tech.mwq365.cn/tags/mongodb/">MongoDB</a></li>
+          
+          <li><a href="http://tech.mwq365.cn/tags/aggregation/">Aggregation</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/aggregation" class="list-group-item">aggregation</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/mongodb" class="list-group-item">mongodb</a>
+      
+      <a href="http://tech.mwq365.cn/tags/nat" class="list-group-item">nat</a>
+      
+      <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%B9%B3%E6%BB%91%E9%87%8D%E5%90%AF" class="list-group-item">平滑重启</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+    </div>
+  </main>
+
+  <footer class="l-footer">
+    <div class="container">
+      <p>&copy;汇编吾信 2017</p>
+      <aside>
+        <p>Powered by
+          <a href="https://gohugo.io/">Hugo</a>. Theme
+          <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by
+          <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+      </aside>
+    </div>
+  </footer>
+
+  <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script>
+    var _hmt = _hmt || [];
+    var devHostnames = ["localhost"];
+    (function () {
+      if (devHostnames.indexOf(location.hostname) !== -1) {
+        return
+      }
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+
+</html>
