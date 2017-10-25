@@ -13,14 +13,14 @@
     
     
     <item>
-      <title>使用hugo搭建博客系统</title>
+      <title>使用hugo搭建博客站点</title>
       <link>http://tech.mwq365.cn/web/blog-with-hugo/</link>
       <pubDate>Fri, 20 Oct 2017 17:43:56 +0800</pubDate>
       
       <guid>http://tech.mwq365.cn/web/blog-with-hugo/</guid>
       <description>&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;
 
-&lt;p&gt;作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的Time和Money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。&lt;/p&gt;
+&lt;p&gt;作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的time和money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。&lt;/p&gt;
 
 &lt;h2 id=&#34;搭建博客&#34;&gt;搭建博客&lt;/h2&gt;
 

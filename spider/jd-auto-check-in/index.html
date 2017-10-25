@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="http://tech.mwq365.cn/spider/jd-auto-check-in/">
+
+
+  <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+  <title>Python爬虫实现京东自动签到 - 汇编吾信</title>
+  
+<meta name="description" content="&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&lt;p&gt;作为一名羊毛党，经常在京东上抢几张券，每天签到领取&amp;rdquo;京豆&amp;rdquo;。日复一日，每天手动操作，这有点违背程序员&amp;rdquo;Don&amp;rsquo;t Repeat Yourself&amp;rdquo;的原则。能不能让签到自动化呢？ 答案是肯定的。现在我们写点代码，让机器帮我们签到。将人工从简单的重复劳动中解救出来，这才是我们该干的事。&lt;/p&gt;&lt;p&gt;在这里我们主要使用Selenium和python来实现功能。Selenium是一款自动化工具，可以用来实现自动化测试。我们用Python来操作Selenium，控制浏览器，模拟人工访问网站签到。&lt;/p&gt;">
+
+<meta property="og:title" content="Python爬虫实现京东自动签到 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tech.mwq365.cn/spider/jd-auto-check-in/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&lt;p&gt;作为一名羊毛党，经常在京东上抢几张券，每天签到领取&amp;rdquo;京豆&amp;rdquo;。日复一日，每天手动操作，这有点违背程序员&amp;rdquo;Don&amp;rsquo;t Repeat Yourself&amp;rdquo;的原则。能不能让签到自动化呢？ 答案是肯定的。现在我们写点代码，让机器帮我们签到。将人工从简单的重复劳动中解救出来，这才是我们该干的事。&lt;/p&gt;&lt;p&gt;在这里我们主要使用Selenium和python来实现功能。Selenium是一款自动化工具，可以用来实现自动化测试。我们用Python来操作Selenium，控制浏览器，模拟人工访问网站签到。&lt;/p&gt;">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="http://tech.mwq365.cn/spider/jd-auto-check-in/">
+<meta name="twitter:title" content="Python爬虫实现京东自动签到 - 汇编吾信">
+<meta name="twitter:description" content="&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;&lt;p&gt;作为一名羊毛党，经常在京东上抢几张券，每天签到领取&amp;rdquo;京豆&amp;rdquo;。日复一日，每天手动操作，这有点违背程序员&amp;rdquo;Don&amp;rsquo;t Repeat Yourself&amp;rdquo;的原则。能不能让签到自动化呢？ 答案是肯定的。现在我们写点代码，让机器帮我们签到。将人工从简单的重复劳动中解救出来，这才是我们该干的事。&lt;/p&gt;&lt;p&gt;在这里我们主要使用Selenium和python来实现功能。Selenium是一款自动化工具，可以用来实现自动化测试。我们用Python来操作Selenium，控制浏览器，模拟人工访问网站签到。&lt;/p&gt;">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://tech.mwq365.cn/"
+    },
+    "headline": "Python爬虫实现京东自动签到 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://tech.mwq365.cn/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-10-25T10:00:00JST",
+    "dateModified": "2017-10-25T09:12:06JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://tech.mwq365.cn/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "<h2 id="背景">背景</h2>
+
+<p>作为一名羊毛党，经常在京东上抢几张券，每天签到领取&rdquo;京豆&rdquo;。日复一日，每天手动操作，这有点违背程序员&rdquo;Don&rsquo;t Repeat Yourself&rdquo;的原则。能不能让签到自动化呢？ 答案是肯定的。现在我们写点代码，让机器帮我们签到。将人工从简单的重复劳动中解救出来，这才是我们该干的事。</p>
+
+<p>在这里我们主要使用Selenium和python来实现功能。Selenium是一款自动化工具，可以用来实现自动化测试。我们用Python来操作Selenium，控制浏览器，模拟人工访问网站签到。
+</p>"
+  }
+</script>
+
+
+  <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+  <header class="l-header">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+        </div>
+
+        
+        <div id="navbar" class="collapse navbar-collapse">
+          
+          <ul class="nav navbar-nav navbar-right">
+             
+            <li>
+              <a href="/data/">大数据</a>
+            </li>
+              
+            <li>
+              <a href="/db/">数据库</a>
+            </li>
+              
+            <li>
+              <a href="/go/">GO语言</a>
+            </li>
+              
+            <li>
+              <a href="/ops/">服务器运维</a>
+            </li>
+              
+            <li>
+              <a href="/spiders/">爬虫</a>
+            </li>
+              
+            <li>
+              <a href="/web/">WEB</a>
+            </li>
+             
+          </ul>
+          
+        </div>
+        
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/spider/" itemprop="url"><span itemprop="title">spider</span></a></li>
+        
+        <li class="active">Python爬虫实现京东自动签到</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-25T09:12:06JST">2017-10-25 09:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/spider/">spider</a></li>
+      
+      <li>
+          <span id="busuanzi_container_page_pv">
+              PV: <span id="busuanzi_value_page_pv"> </span>
+          </span>
+      </li>
+    </ul>
+
+    <h1 class="title">Python爬虫实现京东自动签到</h1>
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="背景">背景</h2>
+
+<p>作为一名羊毛党，经常在京东上抢几张券，每天签到领取&rdquo;京豆&rdquo;。日复一日，每天手动操作，这有点违背程序员&rdquo;Don&rsquo;t Repeat Yourself&rdquo;的原则。能不能让签到自动化呢？ 答案是肯定的。现在我们写点代码，让机器帮我们签到。将人工从简单的重复劳动中解救出来，这才是我们该干的事。</p>
+
+<p>在这里我们主要使用Selenium和python来实现功能。Selenium是一款自动化工具，可以用来实现自动化测试。我们用Python来操作Selenium，控制浏览器，模拟人工访问网站签到。
+</p>
+
+<h2 id="准备">准备</h2>
+
+<p>在开始编写代码前，先准备好环境。</p>
+
+<ul>
+<li><p>下载Selenium</p>
+
+<pre><code class="language-bash">pip install -U selenium
+</code></pre></li>
+
+<li><p>下载驱动
+Selenium需要安装驱动才能操作对应的浏览器，我们选择chrome版
+从<a href="https://sites.google.com/a/chromium.org/chromedriver/downloads">https://sites.google.com/a/chromium.org/chromedriver/downloads</a> 下载(需翻墙)</p></li>
+</ul>
+
+<p>下载完后解压，得到chromedriver.exe，将文件拷贝到某个PATH目录，这样Selenium才能随时通过chromedriver控制chrome浏览器。</p>
+
+<h2 id="实现">实现</h2>
+
+<p>首先定义辅助类:</p>
+
+<pre><code class="language-python"># -*-coding:utf-8-*-
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+from selenium.common.exceptions import *
+import logging
+import zlib
+import binascii
+import sys
+
+# 操作之间等3秒
+sleep_between_op = 3
+
+class SeHelper:
+    def __init__(self, se_driver, timeout=10):
+        self._driver = se_driver
+        self._timeout = timeout
+
+    def clear(self):
+    '''清cookie'''
+        self._driver.delete_all_cookies()
+
+    def go_page(self, url):
+    '''访问链接'''
+        self._driver.get(url)
+        time.sleep(sleep_between_op)
+
+    def click_by_id(self, element_id):
+    '''按html 元素id找到对应元素，然后点击'''
+        self._driver.find_element_by_id(element_id).click()
+
+    def fill_by_id(self, element_id, chars):
+    '''按html 元素id找到对应元素，然后输入字符串'''
+        self._driver.find_element_by_id(element_id).send_keys(chars)
+
+    def click_by_class(self, class_name):
+    '''按html css类找到对应元素，然后点击'''
+        self._driver.find_element_by_class_name(class_name).click()
+
+    def wait_by_id(self, element_id):
+    '''等待id对应的元素出现'''
+        return WebDriverWait(self._driver, self._timeout).until(
+            EC.presence_of_element_located((By.ID, element_id))
+        )
+
+    def wait_by_class(self, class_name):
+    '''等待css类对应的元素出现'''
+        return WebDriverWait(self._driver, self._timeout).until(
+            EC.presence_of_element_located((By.CLASS_NAME, class_name))
+        )
+</code></pre>
+
+<ul>
+<li>实现登录</li>
+</ul></div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://tech.mwq365.cn/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a></li>
+          
+          <li><a href="http://tech.mwq365.cn/tags/selenium/">selenium</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/aggregation" class="list-group-item">aggregation</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/mongodb" class="list-group-item">mongodb</a>
+      
+      <a href="http://tech.mwq365.cn/tags/nat" class="list-group-item">nat</a>
+      
+      <a href="http://tech.mwq365.cn/tags/selenium" class="list-group-item">selenium</a>
+      
+      <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+    </div>
+  </main>
+
+  <footer class="l-footer">
+    <div class="container">
+      <p>&copy;汇编吾信 2017
+        <span id="busuanzi_container_site_pv">
+          站点总访问量<span id="busuanzi_value_site_pv"></span>次
+       </span>
+      </p>
+      <aside>
+        <p>Powered by
+          <a href="https://gohugo.io/">Hugo</a>. Theme
+          <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by
+          <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+      </aside>
+
+     
+    </div>
+  </footer>
+
+  <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script>
+    var _hmt = _hmt || [];
+    var devHostnames = ["localhost",'127.0.0.1'];
+    (function () {
+      if (devHostnames.indexOf(location.hostname) !== -1) {
+        return
+      }
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+</body>
+
+</html>

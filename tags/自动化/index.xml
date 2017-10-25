@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>自动化 on 汇编吾信</title>
+    <link>http://tech.mwq365.cn/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</link>
+    <description>Recent content in 自动化 on 汇编吾信</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>&amp;copy;汇编吾信 2017</copyright>
+    <lastBuildDate>Wed, 25 Oct 2017 10:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="http://tech.mwq365.cn/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python爬虫实现京东自动签到</title>
+      <link>http://tech.mwq365.cn/spider/jd-auto-check-in/</link>
+      <pubDate>Wed, 25 Oct 2017 10:00:00 +0800</pubDate>
+      
+      <guid>http://tech.mwq365.cn/spider/jd-auto-check-in/</guid>
+      <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+
+&lt;p&gt;作为一名羊毛党，经常在京东上抢几张券，每天签到领取&amp;rdquo;京豆&amp;rdquo;。日复一日，每天手动操作，这有点违背程序员&amp;rdquo;Don&amp;rsquo;t Repeat Yourself&amp;rdquo;的原则。能不能让签到自动化呢？ 答案是肯定的。现在我们写点代码，让机器帮我们签到。将人工从简单的重复劳动中解救出来，这才是我们该干的事。&lt;/p&gt;
+
+&lt;p&gt;在这里我们主要使用Selenium和python来实现功能。Selenium是一款自动化工具，可以用来实现自动化测试。我们用Python来操作Selenium，控制浏览器，模拟人工访问网站签到。
+&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

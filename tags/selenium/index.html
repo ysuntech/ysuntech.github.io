@@ -7,15 +7,15 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.30.2" />
 
-<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/tags/nat/index.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/tags/selenium/index.xml">
 
-<link rel="canonical" href="http://tech.mwq365.cn/tags/nat/">
+<link rel="canonical" href="http://tech.mwq365.cn/tags/selenium/">
 
 
   <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
-  <title>Nat - 汇编吾信</title>
+  <title>Selenium - 汇编吾信</title>
   
   <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
 </head>
@@ -80,7 +80,7 @@
 
     
     <header class="page-header">
-      <h1>Nat</h1>
+      <h1>Selenium</h1>
     </header>
     
 
@@ -89,24 +89,23 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-24T11:12:54JST">2017-10-24 11:00</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/ops/">ops</a></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-25T09:12:06JST">2017-10-25 09:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/spider/">spider</a></li>
       
     </ul>
-    <h2 class="title"><a href="http://tech.mwq365.cn/ops/autossh/">使用autossh穿透NAT访问内网服务器</a></h2>
+    <h2 class="title"><a href="http://tech.mwq365.cn/spider/jd-auto-check-in/">Python爬虫实现京东自动签到</a></h2>
   </header>
 
   
-  <div class="summary"><h2 id="简介">简介</h2>
+  <div class="summary"><h2 id="背景">背景</h2>
 
-<p>我猜想很多服务端工程师都希望有一台自己的主机，随时上去做点实验捣鼓捣鼓。嗯，也许你已经买了VPS，搭起个人博客。That&rsquo;s good. 但总感觉少了点什么，VPS还是不受自己完全掌控。现在PC功耗越来越低，树莓派之类的硬件经济实惠，跑个WebServer没有问题。要是能随时访问家里的这些机器该多好。想法是好的，但实现起来有点问题：没有公网IP，我们该怎么访问这些机器呢？</p>
+<p>作为一名羊毛党，经常在京东上抢几张券，每天签到领取&rdquo;京豆&rdquo;。日复一日，每天手动操作，这有点违背程序员&rdquo;Don&rsquo;t Repeat Yourself&rdquo;的原则。能不能让签到自动化呢？ 答案是肯定的。现在我们写点代码，让机器帮我们签到。将人工从简单的重复劳动中解救出来，这才是我们该干的事。</p>
 
-<p>我们的主机躲在家庭路由器之后，只有宽带运营商提供的局域网IP。别灰心，如果有一台从公网访问的中继服务器，我们可以用autossh来实现NAT穿透，随时通过中继服务器访问家庭主机。</p>
-
-<p></p></div>
+<p>在这里我们主要使用Selenium和python来实现功能。Selenium是一款自动化工具，可以用来实现自动化测试。我们用Python来操作Selenium，控制浏览器，模拟人工访问网站签到。
+</p></div>
 
   <footer>
-    <a href="http://tech.mwq365.cn/ops/autossh/" title="使用autossh穿透NAT访问内网服务器">Read More…</a>
+    <a href="http://tech.mwq365.cn/spider/jd-auto-check-in/" title="Python爬虫实现京东自动签到">Read More…</a>
   </footer>
 </article>
 </li>
