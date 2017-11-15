@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://tech.mwq365.cn/money/wanke-speedup/</loc>
+    <lastmod>2017-11-15T02:33:56+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://tech.mwq365.cn/spider/jd-auto-check-in/</loc>
     <lastmod>2017-10-25T09:12:06+01:00</lastmod>
   </url>
@@ -75,6 +80,12 @@
   <url>
     <loc>http://tech.mwq365.cn/tags/hugo/</loc>
     <lastmod>2017-10-25T09:12:06+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://tech.mwq365.cn/money/</loc>
+    <lastmod>2017-11-15T02:33:56+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -152,7 +163,7 @@
   
   <url>
     <loc>http://tech.mwq365.cn/</loc>
-    <lastmod>2017-10-25T09:12:06+01:00</lastmod>
+    <lastmod>2017-11-15T02:33:56+00:00</lastmod>
     <priority>0</priority>
   </url>
   

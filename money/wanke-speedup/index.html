@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="http://tech.mwq365.cn/money/wanke-speedup/">
+
+
+  <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+  <title>玩客云加速 - 汇编吾信</title>
+  
+<meta name="description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;最近玩客云比较火，随着挖矿大军队伍壮大，本来就不高的收益却更加寒碜。本文介绍作者最近实验成功的一些提高上行带宽提高挖矿效率的技巧。&lt;/p&gt;&lt;p&gt;关键词: 多拨, 并发拨号, 沃宽提速, 斐讯路由器, 高恪固件&lt;/p&gt;&lt;p&gt;注意： 我的宽带是北京联通宽带，其它运营商是否支持多播和有效不确定。&lt;/p&gt;&lt;p&gt;背景：&lt;/p&gt;&lt;p&gt;我的宽带是50M联通沃宽,默认上行4M。 我有两台机器，一台带2个32G U盘，一台挂1G硬盘。 提速前，每台每天大致5个币。提速后平均13个币。&lt;img src=&#34;/media/onecloud1.png&#34; alt=&#34;挂U盘的玩客云&#34; /&gt;&lt;img src=&#34;/media/onecloud2.png&#34; alt=&#34;挂硬盘的玩客云&#34; /&gt;&lt;/p&gt;">
+
+<meta property="og:title" content="玩客云加速 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tech.mwq365.cn/money/wanke-speedup/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;最近玩客云比较火，随着挖矿大军队伍壮大，本来就不高的收益却更加寒碜。本文介绍作者最近实验成功的一些提高上行带宽提高挖矿效率的技巧。&lt;/p&gt;&lt;p&gt;关键词: 多拨, 并发拨号, 沃宽提速, 斐讯路由器, 高恪固件&lt;/p&gt;&lt;p&gt;注意： 我的宽带是北京联通宽带，其它运营商是否支持多播和有效不确定。&lt;/p&gt;&lt;p&gt;背景：&lt;/p&gt;&lt;p&gt;我的宽带是50M联通沃宽,默认上行4M。 我有两台机器，一台带2个32G U盘，一台挂1G硬盘。 提速前，每台每天大致5个币。提速后平均13个币。&lt;img src=&#34;/media/onecloud1.png&#34; alt=&#34;挂U盘的玩客云&#34; /&gt;&lt;img src=&#34;/media/onecloud2.png&#34; alt=&#34;挂硬盘的玩客云&#34; /&gt;&lt;/p&gt;">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="http://tech.mwq365.cn/money/wanke-speedup/">
+<meta name="twitter:title" content="玩客云加速 - 汇编吾信">
+<meta name="twitter:description" content="&lt;h2 id=&#34;介绍&#34;&gt;介绍&lt;/h2&gt;&lt;p&gt;最近玩客云比较火，随着挖矿大军队伍壮大，本来就不高的收益却更加寒碜。本文介绍作者最近实验成功的一些提高上行带宽提高挖矿效率的技巧。&lt;/p&gt;&lt;p&gt;关键词: 多拨, 并发拨号, 沃宽提速, 斐讯路由器, 高恪固件&lt;/p&gt;&lt;p&gt;注意： 我的宽带是北京联通宽带，其它运营商是否支持多播和有效不确定。&lt;/p&gt;&lt;p&gt;背景：&lt;/p&gt;&lt;p&gt;我的宽带是50M联通沃宽,默认上行4M。 我有两台机器，一台带2个32G U盘，一台挂1G硬盘。 提速前，每台每天大致5个币。提速后平均13个币。&lt;img src=&#34;/media/onecloud1.png&#34; alt=&#34;挂U盘的玩客云&#34; /&gt;&lt;img src=&#34;/media/onecloud2.png&#34; alt=&#34;挂硬盘的玩客云&#34; /&gt;&lt;/p&gt;">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://tech.mwq365.cn/"
+    },
+    "headline": "玩客云加速 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://tech.mwq365.cn/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2017-11-15T09:46:29JST",
+    "dateModified": "2017-11-15T02:33:56JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://tech.mwq365.cn/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "<h2 id="介绍">介绍</h2>
+
+<p>最近玩客云比较火，随着挖矿大军队伍壮大，本来就不高的收益却更加寒碜。本文介绍作者最近实验成功的一些提高上行带宽提高挖矿效率的技巧。</p>
+
+<p>关键词: 多拨, 并发拨号, 沃宽提速, 斐讯路由器, 高恪固件</p>
+
+<p>注意： 我的宽带是北京联通宽带，其它运营商是否支持多播和有效不确定。</p>
+
+<p>背景：</p>
+
+<p>我的宽带是50M联通沃宽,默认上行4M。 我有两台机器，一台带2个32G U盘，一台挂1G硬盘。 提速前，每台每天大致5个币。提速后平均13个币。
+
+<img src="/media/onecloud1.png" alt="挂U盘的玩客云" />
+<img src="/media/onecloud2.png" alt="挂硬盘的玩客云" /></p>"
+  }
+</script>
+
+
+  <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+  <header class="l-header">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+        </div>
+
+        
+        <div id="navbar" class="collapse navbar-collapse">
+          
+          <ul class="nav navbar-nav navbar-right">
+             
+            <li>
+              <a href="/data/">大数据</a>
+            </li>
+              
+            <li>
+              <a href="/db/">数据库</a>
+            </li>
+              
+            <li>
+              <a href="/go/">GO语言</a>
+            </li>
+              
+            <li>
+              <a href="/ops/">服务器运维</a>
+            </li>
+              
+            <li>
+              <a href="/spiders/">爬虫</a>
+            </li>
+              
+            <li>
+              <a href="/web/">WEB</a>
+            </li>
+             
+          </ul>
+          
+        </div>
+        
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/money/" itemprop="url"><span itemprop="title">money</span></a></li>
+        
+        <li class="active">玩客云加速</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-11-15T02:33:56JST">2017-11-15 02:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/money/">money</a></li>
+      
+      <li>
+          <span id="busuanzi_container_page_pv">
+              PV: <span id="busuanzi_value_page_pv"> </span>
+          </span>
+      </li>
+    </ul>
+
+    <h1 class="title">玩客云加速</h1>
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="介绍">介绍</h2>
+
+<p>最近玩客云比较火，随着挖矿大军队伍壮大，本来就不高的收益却更加寒碜。本文介绍作者最近实验成功的一些提高上行带宽提高挖矿效率的技巧。</p>
+
+<p>关键词: 多拨, 并发拨号, 沃宽提速, 斐讯路由器, 高恪固件</p>
+
+<p>注意： 我的宽带是北京联通宽带，其它运营商是否支持多播和有效不确定。</p>
+
+<p>背景：</p>
+
+<p>我的宽带是50M联通沃宽,默认上行4M。 我有两台机器，一台带2个32G U盘，一台挂1G硬盘。 提速前，每台每天大致5个币。提速后平均13个币。
+
+<img src="/media/onecloud1.png" alt="挂U盘的玩客云" />
+<img src="/media/onecloud2.png" alt="挂硬盘的玩客云" /></p>
+
+<h2 id="提速步骤">提速步骤:</h2>
+
+<ul>
+<li>确保可使用路由器拨号</li>
+</ul>
+
+<p>联通默认光猫采用NAT内置拨号，路由器无法拨号。</p>
+
+<ul>
+<li>采购路由器</li>
+</ul>
+
+<p>多拨之前得准备路由器</p>
+
+<p>采购了一台斐讯K2P银色路由器，硬件版本A2。</p>
+
+<p>注意： 买银白色版，别买金色版。银色版可刷固件多，以后出手也容易。</p>
+
+<p>斐讯路由器可兑换K码，相当于0元撸路由器。K2P默认3个月下车，注册积分兑换后可做到2个月下车。 不用去闲鱼买二手路由器啦。</p>
+
+<p>A2版和A1版配置大体相同，固件通用。没必要刻意追求A1版。</p>
+
+<ul>
+<li><p>刷固件
+路由器自带固件不支持多拨，我是刷了高恪固件之后实现多拨。
+参考帖子：
+刷官改版 <a href="http://www.gocloud.cn/bbs/forum.php?mod=viewthread&amp;tid=459&amp;extra=page%3D4">http://www.gocloud.cn/bbs/forum.php?mod=viewthread&amp;tid=459&amp;extra=page%3D4</a>
+刷高恪 <a href="http://www.gocloud.cn/bbs/forum.php?mod=viewthread&amp;tid=241">http://www.gocloud.cn/bbs/forum.php?mod=viewthread&amp;tid=241</a>
+大致流程为： 进入刷机模式 -&gt; 刷官改带breed版 -&gt; 进breed -&gt; 刷高恪</p></li>
+
+<li><p>多拨
+高恪多拨可参考这篇： <a href="https://jingyan.baidu.com/article/ab69b2709dc1082ca7189fd3.html">https://jingyan.baidu.com/article/ab69b2709dc1082ca7189fd3.html</a></p></li>
+</ul>
+
+<p>注意多拨设置： 每个拨号配置设置为&rdquo;并发拨号&rdquo;， 负载均衡改为按IP+端口方式。</p>
+
+<ul>
+<li>加速脚本</li>
+</ul>
+
+<p>提速:
+<a href="http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=09&amp;old=07&amp;round=29">http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=09&amp;old=07&amp;round=29</a>
+恢复: <a href="http://bj.wokuan.cn/web/lowerspeed.php?ContractNo=宽带帐号&amp;round=85">http://bj.wokuan.cn/web/lowerspeed.php?ContractNo=宽带帐号&amp;round=85</a></p>
+
+<p>上面up old表示提升和本来的两种宽带类型
+09是100M
+07是10M
+round是随机数</p>
+
+<p>我自己的是50M签约，用沃宽客户端提速发现请求链接为：
+<a href="http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=44&amp;old=08&amp;round=47">http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=44&amp;old=08&amp;round=47</a>
+将这个地址用curl定时请求即可， 懂linux的同学可以在内网任意一台机器配置crontab</p>
+
+<pre><code class="language-bash">*/10 * * * * /data/tools/netspeed.sh
+</code></pre>
+
+<p>netspeed.sh内容(宽带帐号换成自己的)</p>
+
+<pre><code class="language-bash">#!/bin/sh
+curl &quot;http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=44&amp;old=08&amp;round=47&quot; &gt;&gt; /data/log/netspeed.log 2&gt;&amp;1
+curl &quot;http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=44&amp;old=08&amp;round=47&quot; &gt;&gt; /data/log/netspeed.log 2&gt;&amp;1
+curl &quot;http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=44&amp;old=08&amp;round=47&quot; &gt;&gt; /data/log/netspeed.log 2&gt;&amp;1
+curl &quot;http://bj.wokuan.cn/web/improvespeed.php?ContractNo=宽带帐号&amp;up=44&amp;old=08&amp;round=47&quot; &gt;&gt; /data/log/netspeed.log 2&gt;&amp;1
+</code></pre>
+
+<p>我的宽带支持4拨，所以我起了4遍。每隔10分钟自动运行。</p>
+
+<p>可能你的宽带签约速率不同，请测试后修改up, old 参数。</p>
+
+<ul>
+<li>结语
+好了，写得比较仓促, 以上就是给玩客云加速的经验，希望有帮助到你。</li>
+</ul></div>
+
+  <footer class="article-footer">
+    
+    
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/aggregation" class="list-group-item">aggregation</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/mongodb" class="list-group-item">mongodb</a>
+      
+      <a href="http://tech.mwq365.cn/tags/nat" class="list-group-item">nat</a>
+      
+      <a href="http://tech.mwq365.cn/tags/selenium" class="list-group-item">selenium</a>
+      
+      <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+    </div>
+  </main>
+
+  <footer class="l-footer">
+    <div class="container">
+      <p>&copy;汇编吾信 2017
+        <span id="busuanzi_container_site_pv">
+          站点总访问量<span id="busuanzi_value_site_pv"></span>次
+       </span>
+      </p>
+      <aside>
+        <p>Powered by
+          <a href="https://gohugo.io/">Hugo</a>. Theme
+          <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by
+          <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+      </aside>
+
+     
+    </div>
+  </footer>
+
+  <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script>
+    var _hmt = _hmt || [];
+    var devHostnames = ["localhost",'127.0.0.1'];
+    (function () {
+      if (devHostnames.indexOf(location.hostname) !== -1) {
+        return
+      }
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+</body>
+
+</html>
