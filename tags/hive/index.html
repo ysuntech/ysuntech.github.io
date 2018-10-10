@@ -7,15 +7,15 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <meta name="generator" content="Hugo 0.30.2" />
 
-<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/index.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://tech.mwq365.cn/tags/hive/index.xml">
 
-<link rel="canonical" href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/">
+<link rel="canonical" href="http://tech.mwq365.cn/tags/hive/">
 
 
   <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
-  <title>博客系统 - 汇编吾信</title>
+  <title>Hive - 汇编吾信</title>
   
   <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
 </head>
@@ -88,7 +88,7 @@
 
     
     <header class="page-header">
-      <h1>博客系统</h1>
+      <h1>Hive</h1>
     </header>
     
 
@@ -97,38 +97,22 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-25T09:12:06JST">2017-10-25 09:00</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/web/">web</a></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-10T10:37:59JST">2018-10-10 10:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
       
     </ul>
-    <h2 class="title"><a href="http://tech.mwq365.cn/web/blog-with-hugo/">使用hugo搭建博客站点</a></h2>
+    <h2 class="title"><a href="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/">未正确设置时区导致数据载入hive时被过滤</a></h2>
   </header>
 
   
-  <div class="summary"><h2 id="介绍">介绍</h2>
+  <div class="summary"><h2 id="问题描述">问题描述</h2>
 
-<p>作为web技术从业人员，经常有一些笔记心得需要记录。可以选择在csdn或者oschina等站点写博客。也有人购买VPS，用wordpress搭建自己的博客。这样比较自由，但购买VPS，搭建lamp环境需要一定的time和money。其实有更简单的解决方案：使用hugo和github pages搭建全静态免费博客。</p>
-
-<h2 id="搭建博客">搭建博客</h2>
-
-<p>让我们开始吧,按步骤来：</p>
-
-<ol>
-<li><p>下载hugo软件，图省事可以直接下载二进制版本</p></li>
-
-<li><p>将下载得到的hugo二进制文件加入PATH环境变量。这样我们可以从命令行输入&rdquo;hugo&rdquo;随时调用hugo</p></li>
-
-<li><p>初始化博客项目</p>
-
-<pre><code class="language-bash">cd ~
-# 创建名为hugo_blog的博客站点
-hugo new site hugo_blog
-</code></pre>
-
-<p></p></div>
+<p>在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。
+运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。
+</p></div>
 
   <footer>
-    <a href="http://tech.mwq365.cn/web/blog-with-hugo/" title="使用hugo搭建博客站点">Read More…</a>
+    <a href="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/" title="未正确设置时区导致数据载入hive时被过滤">Read More…</a>
   </footer>
 </article>
 </li>

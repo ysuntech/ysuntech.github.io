@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>&amp;copy;汇编吾信 2017</copyright>
-    <lastBuildDate>Sat, 21 Oct 2017 23:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Oct 2018 10:33:32 +0800</lastBuildDate>
     
 	<atom:link href="http://tech.mwq365.cn/data/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>未正确设置时区导致数据载入hive时被过滤</title>
+      <link>http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/</link>
+      <pubDate>Wed, 10 Oct 2018 10:33:32 +0800</pubDate>
+      
+      <guid>http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/</guid>
+      <description>&lt;h2 id=&#34;问题描述&#34;&gt;问题描述&lt;/h2&gt;
+
+&lt;p&gt;在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。
+运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。
+&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Airflow调度系统教程【二】:分布式和常见问题</title>

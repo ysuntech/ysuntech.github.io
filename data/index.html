@@ -40,6 +40,10 @@
           <ul class="nav navbar-nav navbar-right">
              
             <li>
+              <a href="/machinelearning/">机器学习</a>
+            </li>
+              
+            <li>
               <a href="/data/">大数据</a>
             </li>
               
@@ -89,6 +93,29 @@
     
 
     <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-10T10:37:59JST">2018-10-10 10:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
+      
+    </ul>
+    <h2 class="title"><a href="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/">未正确设置时区导致数据载入hive时被过滤</a></h2>
+  </header>
+
+  
+  <div class="summary"><h2 id="问题描述">问题描述</h2>
+
+<p>在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。
+运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。
+</p></div>
+
+  <footer>
+    <a href="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/" title="未正确设置时区导致数据载入hive时被过滤">Read More…</a>
+  </footer>
+</article>
+</li>
       
       <li><article class="li">
   <header>
@@ -177,6 +204,8 @@
       
       <a href="http://tech.mwq365.cn/tags/aggregation" class="list-group-item">aggregation</a>
       
+      <a href="http://tech.mwq365.cn/tags/hive" class="list-group-item">hive</a>
+      
       <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
       
       <a href="http://tech.mwq365.cn/tags/mongodb" class="list-group-item">mongodb</a>
@@ -187,9 +216,7 @@
       
       <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
       
-      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
-      
-      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      <a href="http://tech.mwq365.cn/tags/transform" class="list-group-item">transform</a>
       
     </div>
   </section>

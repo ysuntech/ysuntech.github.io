@@ -40,6 +40,10 @@
           <ul class="nav navbar-nav navbar-right">
              
             <li>
+              <a href="/machinelearning/">机器学习</a>
+            </li>
+              
+            <li>
               <a href="/data/">大数据</a>
             </li>
               
@@ -85,6 +89,29 @@
     
 
     <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-10T10:37:59JST">2018-10-10 10:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
+      
+    </ul>
+    <h2 class="title"><a href="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/">未正确设置时区导致数据载入hive时被过滤</a></h2>
+  </header>
+
+  
+  <div class="summary"><h2 id="问题描述">问题描述</h2>
+
+<p>在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。
+运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。
+</p></div>
+
+  <footer>
+    <a href="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/" title="未正确设置时区导致数据载入hive时被过滤">Read More…</a>
+  </footer>
+</article>
+</li>
       
       <li><article class="li">
   <header>
@@ -194,34 +221,6 @@
 </article>
 </li>
       
-      <li><article class="li">
-  <header>
-    <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2017-10-23T13:57:37JST">2017-10-23 13:00</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/go/">go</a></li>
-      
-    </ul>
-    <h2 class="title"><a href="http://tech.mwq365.cn/go/graceful/">GO语言平滑重启</a></h2>
-  </header>
-
-  
-  <div class="summary"><h2 id="背景">背景</h2>
-
-<p>Go语言运行效率和开发效率都比较高，适合用来开发网络服务程序，程序升级或者更新配置后，需要重启进程。</p>
-
-<p>在重过程中，老的请求没有处理完，新的请求不断进来，如何实现 <em>不中断服务</em> 用户无感知 ，也就是&rdquo;<em>平滑重启</em>&ldquo;？</p>
-
-<h2 id="整体思路">整体思路</h2>
-
-<p>新版本文件就绪后，从命令行发送信号 &mdash;&gt; 老的进程fork出子进程，exec新版程序 &mdash;&gt; 子进程从原有listener socket获取连接，处理新请求 &mdash;&gt; 父进程停止接受新连接， 处理完所有已获取的请求 &mdash;&gt; 父进程退出 &mdash;&gt; 重启完成
-</p></div>
-
-  <footer>
-    <a href="http://tech.mwq365.cn/go/graceful/" title="GO语言平滑重启">Read More…</a>
-  </footer>
-</article>
-</li>
-      
     </ul>
 
     
@@ -313,6 +312,8 @@
       
       <a href="http://tech.mwq365.cn/tags/aggregation" class="list-group-item">aggregation</a>
       
+      <a href="http://tech.mwq365.cn/tags/hive" class="list-group-item">hive</a>
+      
       <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
       
       <a href="http://tech.mwq365.cn/tags/mongodb" class="list-group-item">mongodb</a>
@@ -323,9 +324,7 @@
       
       <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
       
-      <a href="http://tech.mwq365.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%B0%83%E5%BA%A6" class="list-group-item">分布式调度</a>
-      
-      <a href="http://tech.mwq365.cn/tags/%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F" class="list-group-item">博客系统</a>
+      <a href="http://tech.mwq365.cn/tags/transform" class="list-group-item">transform</a>
       
     </div>
   </section>

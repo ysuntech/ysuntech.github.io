@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.30.2" />
+
+
+
+<link rel="canonical" href="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/">
+
+
+  <link href="https://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.4/styles/solarized_dark.min.css">
+  <title>未正确设置时区导致数据载入hive时被过滤 - 汇编吾信</title>
+  
+<meta name="description" content="&lt;h2 id=&#34;问题描述&#34;&gt;问题描述&lt;/h2&gt;&lt;p&gt;在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。&lt;/p&gt;">
+
+<meta property="og:title" content="未正确设置时区导致数据载入hive时被过滤 - 汇编吾信">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/">
+<meta property="og:image" content="http://tech.mwq365.cn/images/default.png">
+<meta property="og:site_name" content="汇编吾信">
+<meta property="og:description" content="&lt;h2 id=&#34;问题描述&#34;&gt;问题描述&lt;/h2&gt;&lt;p&gt;在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。&lt;/p&gt;">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="汇编吾信">
+<meta name="twitter:url" content="http://tech.mwq365.cn/data/data-loss-by-misconfigured-timezone/">
+<meta name="twitter:title" content="未正确设置时区导致数据载入hive时被过滤 - 汇编吾信">
+<meta name="twitter:description" content="&lt;h2 id=&#34;问题描述&#34;&gt;问题描述&lt;/h2&gt;&lt;p&gt;在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。&lt;/p&gt;">
+<meta name="twitter:image" content="http://tech.mwq365.cn/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"http://tech.mwq365.cn/"
+    },
+    "headline": "未正确设置时区导致数据载入hive时被过滤 - 汇编吾信",
+    "image": {
+      "@type": "ImageObject",
+      "url": "http://tech.mwq365.cn/images/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-10-10T10:33:32JST",
+    "dateModified": "2018-10-10T10:37:59JST",
+    "author": {
+      "@type": "Person",
+      "name": "汇编吾信"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "汇编吾信",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "http://tech.mwq365.cn/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "<h2 id="问题描述">问题描述</h2>
+
+<p>在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。
+运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。
+</p>"
+  }
+</script>
+
+
+  <link href="http://tech.mwq365.cn/css/styles.css" rel="stylesheet"> 
+</head>
+
+<body>
+  <header class="l-header">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://tech.mwq365.cn/">汇编吾信</a>
+        </div>
+
+        
+        <div id="navbar" class="collapse navbar-collapse">
+          
+          <ul class="nav navbar-nav navbar-right">
+             
+            <li>
+              <a href="/machinelearning/">机器学习</a>
+            </li>
+              
+            <li>
+              <a href="/data/">大数据</a>
+            </li>
+              
+            <li>
+              <a href="/db/">数据库</a>
+            </li>
+              
+            <li>
+              <a href="/go/">GO语言</a>
+            </li>
+              
+            <li>
+              <a href="/ops/">服务器运维</a>
+            </li>
+              
+            <li>
+              <a href="/spiders/">爬虫</a>
+            </li>
+              
+            <li>
+              <a href="/web/">WEB</a>
+            </li>
+              
+            <li>
+              <a href="/money/">赚钱</a>
+            </li>
+             
+          </ul>
+          
+        </div>
+        
+
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="http://tech.mwq365.cn/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://tech.mwq365.cn/data/" itemprop="url"><span itemprop="title">data</span></a></li>
+        
+        <li class="active">未正确设置时区导致数据载入hive时被过滤</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-10T10:37:59JST">2018-10-10 10:00</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="http://tech.mwq365.cn/data/">data</a></li>
+      
+      <li>
+          <span id="busuanzi_container_page_pv">
+              PV: <span id="busuanzi_value_page_pv"> </span>
+          </span>
+      </li>
+    </ul>
+
+    <h1 class="title">未正确设置时区导致数据载入hive时被过滤</h1>
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="问题描述">问题描述</h2>
+
+<p>在生产环境通过kafka收集日志至hdfs,然后通过transform脚本载入hive。 偶尔发现载入hive后的数据变少。
+运营发现数据异常后，通知开发修复。开发没有修改相关程序，重跑任务后，数据却恢复正常。
+</p>
+
+<h2 id="原因分析">原因分析</h2>
+
+<p>起先怀疑是kafka日志收集不全导致。在ETL脚本加上程序运行日志，载入hdfs文件前，记录hdfs上文件大小。 发现hdfs文件大小正常。
+可以排除kafka日志收集异常。
+发现丢失数据大约占1/6，且白天重跑后数据正常。难道程序运行结果和时间有关？查看transform脚本，发现其中有这样几行代码:</p>
+
+<pre><code class="language-php"> $data['time'] = date('Y-m-d H:i:s', $data['time']);
+ $day = substr($data['time'], 0, 10); //从时间戳得到日期
+ if (!in_array($day, $days)) { //过滤掉不在日期范围内的数据
+     continue;
+ }
+</code></pre>
+
+<p>没有发现与运行时刻相关的代码，但怀疑在按日期过滤时，多余过滤了数据。仔细核对代码，发现未设置时区。那么默认时区会造成数据丢失吗？</p>
+
+<h2 id="实验">实验</h2>
+
+<p>写一份简单的php代码来验证猜想</p>
+
+<pre><code class="language-php">&lt;?php
+//时区对本地时间的影响
+//unix时间戳是从1970年1月1日（UTC/GMT的午夜）开始所经过的秒数，不考虑闰秒。unix时间戳基于UTC时区。
+//同样的时间戳，在不同时区下对应不同的当地时间/日期
+
+
+//日志打点,基于东8时区
+date_default_timezone_set('Etc/GMT-8');
+$logRecs = array(
+    array('gmt-8_time'=&gt;'2018-10-01 03:00:00'),
+    array('gmt-8_time'=&gt;'2018-10-01 06:00:00'),
+    array('gmt-8_time'=&gt;'2018-10-01 12:00:00'),
+    array('gmt-8_time'=&gt;'2018-10-01 15:00:00'),
+    array('gmt-8_time'=&gt;'2018-10-01 20:00:00'),
+);
+
+//增加时间戳字段，真实日志中使用时间戳
+foreach($logRecs as &amp;$logRec)
+{
+    $logRec['timestamp'] = strtotime($logRec['gmt-8_time']);
+}
+
+//模拟异常的hive transform 日期转换,基于标准时区
+date_default_timezone_set('UTC');
+foreach($logRecs as &amp;$logRec)
+{
+    $logRec['utc_time'] = date('Y-m-d H:i:s',$logRec['timestamp']);
+}
+
+//按GMT-8时区下日期过滤
+echo &quot;2018-10-01 recs(GMT-8 TZ):\n&quot;;
+foreach($logRecs as $rec){
+    $day = substr($rec['gmt-8_time'],0,10);
+    if($day=='2018-10-01'){
+        echo join(&quot;\t&quot;,$rec).&quot;\n&quot;;
+    }
+}
+
+echo str_repeat(&quot;#&quot;,60).&quot;\n&quot;;
+
+//按UTC时区下日期过滤
+echo &quot;2018-10-01 recs(UTC TZ):\n&quot;;
+foreach($logRecs as $rec){
+    $day = substr($rec['utc_time'],0,10);
+    if($day=='2018-10-01'){
+        echo join(&quot;\t&quot;,$rec).&quot;\n&quot;;
+    }
+}
+</code></pre>
+
+<p>运行结果：</p>
+
+<pre><code>2018-10-01 recs(GMT-8 TZ):
+2018-10-01 03:00:00     1538334000      2018-09-30 19:00:00
+2018-10-01 06:00:00     1538344800      2018-09-30 22:00:00
+2018-10-01 12:00:00     1538366400      2018-10-01 04:00:00
+2018-10-01 15:00:00     1538377200      2018-10-01 07:00:00
+2018-10-01 20:00:00     1538395200      2018-10-01 12:00:00
+############################################################
+2018-10-01 recs(UTC TZ):
+2018-10-01 12:00:00     1538366400      2018-10-01 04:00:00
+2018-10-01 15:00:00     1538377200      2018-10-01 07:00:00
+2018-10-01 20:00:00     1538395200      2018-10-01 12:00:00
+</code></pre>
+
+<p>可以看到UTC时区确实会过滤掉一些正常的日志记录。</p>
+
+<p>h2. 解释
+到现在为止，基本原因已经找到。那为什么大部分时候程序运行正常，并且出现异常后重跑也正常呢？
+猜想hadoop集群上各节点php配置不一致，有的时区设置为东8区，有的没有设置，默认为标准时区。而我们日志中的时间戳都是按东8区来记录。
+程序偶尔被分配到PHP时区为标准时区的节点运行，过滤掉8个小时的正常日志。重跑时被分配到时区配置为东8区的节点运行，数据恢复正常。</p></div>
+
+  <footer class="article-footer">
+    
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="http://tech.mwq365.cn/tags/hive/">hive</a></li>
+          
+          <li><a href="http://tech.mwq365.cn/tags/transform/">transform</a></li>
+          
+          <li><a href="http://tech.mwq365.cn/tags/%E6%97%B6%E5%8C%BA/">时区</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+
+
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="http://tech.mwq365.cn/tags/airflow" class="list-group-item">airflow</a>
+      
+      <a href="http://tech.mwq365.cn/tags/%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F" class="list-group-item">调度系统</a>
+      
+      <a href="http://tech.mwq365.cn/tags/aggregation" class="list-group-item">aggregation</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hive" class="list-group-item">hive</a>
+      
+      <a href="http://tech.mwq365.cn/tags/hugo" class="list-group-item">hugo</a>
+      
+      <a href="http://tech.mwq365.cn/tags/mongodb" class="list-group-item">mongodb</a>
+      
+      <a href="http://tech.mwq365.cn/tags/nat" class="list-group-item">nat</a>
+      
+      <a href="http://tech.mwq365.cn/tags/selenium" class="list-group-item">selenium</a>
+      
+      <a href="http://tech.mwq365.cn/tags/ssh" class="list-group-item">ssh</a>
+      
+      <a href="http://tech.mwq365.cn/tags/transform" class="list-group-item">transform</a>
+      
+    </div>
+  </section>
+  
+
+</aside>
+
+
+  </div>
+</div>
+
+    </div>
+  </main>
+
+  <footer class="l-footer">
+    <div class="container">
+      <p>&copy;汇编吾信 2017
+        <span id="busuanzi_container_site_pv">
+          站点总访问量<span id="busuanzi_value_site_pv"></span>次
+       </span>
+      </p>
+      <aside>
+        <p>Powered by
+          <a href="https://gohugo.io/">Hugo</a>. Theme
+          <a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> by
+          <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+      </aside>
+
+     
+    </div>
+  </footer>
+
+  <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.bootcss.com/highlight.js/8.4/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script>
+    var _hmt = _hmt || [];
+    var devHostnames = ["localhost",'127.0.0.1'];
+    (function () {
+      if (devHostnames.indexOf(location.hostname) !== -1) {
+        return
+      }
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c90e323ccd5844f02576bc59cee948ec";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+</body>
+
+</html>
